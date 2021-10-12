@@ -6,7 +6,6 @@ import ClientReportTable from './components/ClientReportTable';
 import { DateTime } from 'luxon';
 
 import { fetchInvoiceReport } from './api/invoice';
-import { fetchProductReports } from './api/products';
 
 import { ResponsivePie } from '@nivo/pie';
 
@@ -15,6 +14,7 @@ import ClientReportCard from './components/Cards/ClientReport';
 import PriceFluctuationCard from './components/Cards/PriceFluctuation';
 
 import { useReportFilter } from './hooks/useReportFilter';
+import ClientRegistration from './components/Cards/ClientRegistration';
 
 function App() {
   const [dateRange, setDateRange] = useState({
@@ -25,18 +25,21 @@ function App() {
     sale_report: [],
     categories_report: [],
     client_report: [],
+    new_clients_report: [],
   });
   const [chartData, setChartData] = useState({
     sale_report: [],
     categories_report: [],
     client_report: [],
     buy_price_fluctuation: [],
+    new_clients_report: [],
   });
 
   const { filteredData, onFilterDebounced } = useReportFilter(reportDetails, {
     sale_report: [],
     categories_report: [],
     client_report: [],
+    new_clients_report: [],
   });
 
   const onSubmit = async (event) => {
@@ -80,6 +83,10 @@ function App() {
             onFilter={onFilterDebounced}
           />
           <PriceFluctuationCard />
+          <ClientRegistration
+            data={filteredData.new_clients_report.length ? filteredData.new_clients_report : reportDetails.new_clients_report}
+            onFilter={onFilterDebounced}
+          />
         </div>
         <div id='right-content'>
           <div className='card'>
@@ -113,9 +120,9 @@ function App() {
                           <span className='small-square' style={{ background: datum.color }}></span>
                           <strong>{datum.label}</strong>
                           <label>Bruto: </label>
-                          <span>${datum.value}</span>
-                          <label>Neto: </label>
-                          <span>${datum.data.netProfit}</span>
+                          <span>${Number(datum.value).toLocaleString()}</span>
+                          <label>Utilidad: </label>
+                          <span>${Number(datum.data.netProfit).toLocaleString()}</span>
                         </div>
                       );
                     }}
