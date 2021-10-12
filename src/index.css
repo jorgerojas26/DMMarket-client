@@ -1,13 +1,150 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --lightgray: #f5f8fa;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 1%;
+}
+
+#left-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1 1 60%;
+}
+
+#right-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1 1 39%;
+}
+
+div.table-container {
+  max-height: 300px;
+  overflow: auto;
+}
+
+.input-filter {
+  width: 100%;
+  padding: 5px 0;
+}
+
+table {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+  padding-bottom: 5px;
+}
+
+table th {
+  background: var(--lightgray);
+  color: black;
+  border: none;
+  font-size: 16px;
+  padding: 5px 0;
+  text-transform: capitalize;
+}
+
+table td {
+  color: #95a0a1;
+  font-weight: 500;
+  border-right: 1px solid rgb(147, 185, 177, 0.2);
+  padding: 10px;
+  text-transform: capitalize;
+}
+
+table td:first-child {
+  padding: 0;
+}
+
+table td:last-child {
+  border-right: none;
+}
+
+table strong {
+  color: #556769;
+  font-weight: 500;
+}
+
+table tr {
+  border-bottom: 1px solid rgb(147, 185, 177, 0.2);
+}
+
+table tr:last-child {
+  border-bottom: none;
+}
+
+table tfoot {
+  position: sticky;
+  bottom: 0;
+}
+
+table tfoot td {
+  color: black;
+  font-weight: 800;
+  background: var(--lightgray);
+}
+
+div .card {
+  background: white;
+  box-shadow: rgb(101 119 134 / 20%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px;
+  border-radius: 16px;
+}
+
+div .card-header {
+  display: flex;
+  flex: 1 0 50px;
+  background: var(--lightgray);
+  padding: 10px 20px;
+
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom: 1px solid #aab8c2;
+}
+
+div .card-header h2 {
+  margin: 0;
+}
+
+div#date-range-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+div#date-range-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding-bottom: 10px;
+  margin-bottom: 1%;
+  border-bottom: 1px solid black;
+}
+
+.tooltip-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 3px;
+  place-items: start;
+  background: white;
+  padding: 2px;
+}
+
+.small-square {
+  min-height: 10px;
+  min-width: 15px;
+  max-height: 10px;
+  max-width: 15px;
+  border: 1px solid black;
+  clear: both;
+}
+
+@media (min-width: 1280px) {
+  #main {
+    flex-direction: row;
+  }
 }
