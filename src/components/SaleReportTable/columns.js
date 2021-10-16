@@ -33,6 +33,13 @@ const columns = [
       return '$' + Number(total.toFixed(2)).toLocaleString();
     },
   },
+  {
+    Header: 'Promedio',
+    accessor: 'averageProfitPercent',
+    Cell: ({ value }) => {
+      return value + '%';
+    },
+  },
 ];
 
 export default columns;

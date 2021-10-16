@@ -13,7 +13,7 @@ const ClientReportCard = ({ data = [], onFilter }) => {
               className='input-filter'
               placeholder='Buscar...'
               type='search'
-              onChange={(event) => onFilter(event.target.value, 'client_report', 'client')}
+              onChange={(event) => onFilter(event.target.value, 'client', 'client_report')}
             />
             <ClientReportTable data={data} />
           </>

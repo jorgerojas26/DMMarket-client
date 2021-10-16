@@ -8,8 +8,14 @@ export const fetchProducts = async ({ filter }) => {
   return products;
 };
 
+export const fetchProductPriceList = async (groupId) => {
+  const response = await fetch(`${BASE_URL}/price-list/${groupId}`);
+  const report = response.json();
+  return report;
+};
+
 export const fetchProductReports = async (productId) => {
-  const response = await fetch(`${REPORTS_BASE_URL}/buy-price-fluctuation/${productId}`);
+  const response = await fetch(`${REPORTS_BASE_URL}/cost-fluctuation/${productId}`);
   const report = response.json();
   return report;
 };

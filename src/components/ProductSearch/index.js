@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import SearchInput from '../SearchInput';
 import { fetchProducts } from '../../api/products';
 
@@ -30,7 +29,7 @@ const ProductSearch = ({ onSelect }) => {
     }
   };
 
-  return <SearchInput loadOptions={loadProductVariants} placeholder='Buscar producto...' onSelect={handleSelect} />;
+  return <SearchInput loadOptions={loadProductVariants} defaultOptions={false} placeholder='Buscar producto...' onSelect={handleSelect} />;
 };
 
 export default ProductSearch;

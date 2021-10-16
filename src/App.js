@@ -11,10 +11,11 @@ import { ResponsivePie } from '@nivo/pie';
 
 import SaleReportCard from './components/Cards/SaleReport';
 import ClientReportCard from './components/Cards/ClientReport';
-import PriceFluctuationCard from './components/Cards/PriceFluctuation';
+import CostFluctuation from './components/Cards/CostFluctuation';
 
 import { useReportFilter } from './hooks/useReportFilter';
 import ClientRegistration from './components/Cards/ClientRegistration';
+import GroupStock from './components/Cards/GroupStock';
 
 function App() {
   const [dateRange, setDateRange] = useState({
@@ -80,13 +81,14 @@ function App() {
           />
           <ClientReportCard
             data={filteredData.client_report.length ? filteredData.client_report : reportDetails.client_report}
-            onFilter={onFilterDebounced}
+            onFilter={(filterValue, filterKey) => onFilterDebounced(filterValue, filterKey)}
           />
-          <PriceFluctuationCard />
+          <CostFluctuation />
           <ClientRegistration
             data={filteredData.new_clients_report.length ? filteredData.new_clients_report : reportDetails.new_clients_report}
             onFilter={onFilterDebounced}
           />
+          <GroupStock />
         </div>
         <div id='right-content'>
           <div className='card'>

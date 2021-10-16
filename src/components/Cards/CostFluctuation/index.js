@@ -3,7 +3,7 @@ import ProductSearch from '../../ProductSearch';
 import { ResponsiveLine } from '@nivo/line';
 import { fetchProductReports } from '../../../api/products';
 
-const PrriceFluctuation = () => {
+const CostFluctuation = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [data, setData] = useState([]);
 
@@ -11,6 +11,7 @@ const PrriceFluctuation = () => {
     if (selectedProduct) {
       const fetch_product_report = async () => {
         const report_data = await fetchProductReports(selectedProduct.idProducto);
+        console.log(report_data);
 
         setData([report_data]);
       };
@@ -48,4 +49,4 @@ const PrriceFluctuation = () => {
   );
 };
 
-export default PrriceFluctuation;
+export default CostFluctuation;
