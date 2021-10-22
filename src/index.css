@@ -15,7 +15,7 @@ body {
 #left-content {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   margin-bottom: 60px;
   flex: 1 1 60%;
 }
@@ -23,12 +23,12 @@ body {
 #right-content {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   flex: 1 1 39%;
 }
 
 div.table-container {
-  max-height: 300px;
+  max-height: 92%;
   overflow: auto;
 }
 
@@ -39,6 +39,7 @@ div.table-container {
 
 table {
   width: 100%;
+  height: 100%;
   text-align: center;
   border-collapse: collapse;
   padding-bottom: 5px;
@@ -110,6 +111,10 @@ div .card-header {
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   border-bottom: 1px solid #aab8c2;
+}
+
+div.card-body {
+  height: 400px;
 }
 
 div .card-header h2 {

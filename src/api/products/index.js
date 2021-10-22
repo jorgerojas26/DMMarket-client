@@ -19,3 +19,9 @@ export const fetchProductReports = async (productId) => {
   const report = response.json();
   return report;
 };
+
+export const fetchBestClients = async (productId, dateRange) => {
+  const response = await fetch(`${REPORTS_BASE_URL}/best-clients/${productId}?from=${dateRange.from}&to=${dateRange.to}`);
+  const report = response.json();
+  return report;
+};

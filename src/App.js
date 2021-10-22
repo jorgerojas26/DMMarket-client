@@ -1,7 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
-
-import SaleReportTable from './components/SaleReportTable';
-import ClientReportTable from './components/ClientReportTable';
+import { useState, useEffect } from 'react';
 
 import { DateTime } from 'luxon';
 
@@ -12,10 +9,11 @@ import { ResponsivePie } from '@nivo/pie';
 import SaleReportCard from './components/Cards/SaleReport';
 import ClientReportCard from './components/Cards/ClientReport';
 import CostFluctuation from './components/Cards/CostFluctuation';
+//import ClientRegistration from './components/Cards/ClientRegistration';
+import GroupStock from './components/Cards/GroupStock';
+import ClientPerProductCard from './components/ClientPerProduct/Card';
 
 import { useReportFilter } from './hooks/useReportFilter';
-import ClientRegistration from './components/Cards/ClientRegistration';
-import GroupStock from './components/Cards/GroupStock';
 
 function App() {
   const [dateRange, setDateRange] = useState({
@@ -84,52 +82,53 @@ function App() {
             onFilter={(filterValue, filterKey) => onFilterDebounced(filterValue, filterKey)}
           />
           <CostFluctuation />
+          {/*
           <ClientRegistration
             data={filteredData.new_clients_report.length ? filteredData.new_clients_report : reportDetails.new_clients_report}
             onFilter={onFilterDebounced}
           />
-          <GroupStock />
+          */}
         </div>
         <div id='right-content'>
+          <ClientPerProductCard dateRange={dateRange} />
+          <GroupStock />
           <div className='card'>
             <div className='card-header'>
               <h2>Gráfico de categorías</h2>
             </div>
             <div className='card-body'>
               {chartData.categories_report.length > 0 && (
-                <div style={{ height: '300px' }}>
-                  <ResponsivePie
-                    data={chartData.categories_report}
-                    margin={{ top: 30, right: 20, bottom: 20, left: 20 }}
-                    innerRadius={0.5}
-                    padAngle={0.7}
-                    cornerRadius={3}
-                    activeOuterRadiusOffset={8}
-                    arcLabel={function (e) {
-                      return `${e.value} (${e.data.netProfit})`;
-                    }}
-                    borderWidth={1}
-                    borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
-                    arcLinkLabelsSkipAngle={10}
-                    arcLinkLabelsTextColor='#333333'
-                    arcLinkLabelsThickness={2}
-                    arcLinkLabelsColor={{ from: 'color' }}
-                    arcLabelsSkipAngle={10}
-                    arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
-                    tooltip={({ datum }) => {
-                      return (
-                        <div className='tooltip-container'>
-                          <span className='small-square' style={{ background: datum.color }}></span>
-                          <strong>{datum.label}</strong>
-                          <label>Bruto: </label>
-                          <span>${Number(datum.value).toLocaleString()}</span>
-                          <label>Utilidad: </label>
-                          <span>${Number(datum.data.netProfit).toLocaleString()}</span>
-                        </div>
-                      );
-                    }}
-                  />
-                </div>
+                <ResponsivePie
+                  data={chartData.categories_report}
+                  margin={{ top: 30, right: 20, bottom: 20, left: 20 }}
+                  innerRadius={0.5}
+                  padAngle={0.7}
+                  cornerRadius={3}
+                  activeOuterRadiusOffset={8}
+                  arcLabel={function (e) {
+                    return `${e.value} (${e.data.netProfit})`;
+                  }}
+                  borderWidth={1}
+                  borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
+                  arcLinkLabelsSkipAngle={10}
+                  arcLinkLabelsTextColor='#333333'
+                  arcLinkLabelsThickness={2}
+                  arcLinkLabelsColor={{ from: 'color' }}
+                  arcLabelsSkipAngle={10}
+                  arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
+                  tooltip={({ datum }) => {
+                    return (
+                      <div className='tooltip-container'>
+                        <span className='small-square' style={{ background: datum.color }}></span>
+                        <strong>{datum.label}</strong>
+                        <label>Bruto: </label>
+                        <span>${Number(datum.value).toLocaleString()}</span>
+                        <label>Utilidad: </label>
+                        <span>${Number(datum.data.netProfit).toLocaleString()}</span>
+                      </div>
+                    );
+                  }}
+                />
               )}
             </div>
           </div>
@@ -139,24 +138,22 @@ function App() {
             </div>
             <div className='card-body'>
               {chartData.client_report.length > 0 && (
-                <div style={{ height: '300px' }}>
-                  <ResponsivePie
-                    data={chartData.client_report}
-                    margin={{ top: 30, right: 20, bottom: 20, left: 20 }}
-                    innerRadius={0.5}
-                    padAngle={0.7}
-                    cornerRadius={3}
-                    activeOuterRadiusOffset={8}
-                    borderWidth={1}
-                    borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
-                    arcLinkLabelsSkipAngle={10}
-                    arcLinkLabelsTextColor='#333333'
-                    arcLinkLabelsThickness={2}
-                    arcLinkLabelsColor={{ from: 'color' }}
-                    arcLabelsSkipAngle={10}
-                    arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
-                  />
-                </div>
+                <ResponsivePie
+                  data={chartData.client_report}
+                  margin={{ top: 30, right: 20, bottom: 20, left: 20 }}
+                  innerRadius={0.5}
+                  padAngle={0.7}
+                  cornerRadius={3}
+                  activeOuterRadiusOffset={8}
+                  borderWidth={1}
+                  borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
+                  arcLinkLabelsSkipAngle={10}
+                  arcLinkLabelsTextColor='#333333'
+                  arcLinkLabelsThickness={2}
+                  arcLinkLabelsColor={{ from: 'color' }}
+                  arcLabelsSkipAngle={10}
+                  arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
+                />
               )}
             </div>
           </div>

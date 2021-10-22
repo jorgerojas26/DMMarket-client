@@ -15,6 +15,7 @@ export const useReportFilter = (data_to_filter, initial_state = []) => {
   const filter = (filterValue, filterKey) => {
     const filtered = data_to_filter.filter((r) => r[filterKey].toLowerCase().includes(filterValue.toLowerCase()));
     setFilteredData(filtered);
+    return filtered;
   };
 
   const nestedFilter = (filterValue, filterKey, nestedKey) => {
@@ -24,6 +25,7 @@ export const useReportFilter = (data_to_filter, initial_state = []) => {
   };
 
   return {
+    filter,
     filteredData,
     setFilteredData,
     onFilterDebounced,

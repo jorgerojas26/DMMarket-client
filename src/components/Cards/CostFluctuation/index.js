@@ -10,7 +10,7 @@ const CostFluctuation = () => {
   useEffect(() => {
     if (selectedProduct) {
       const fetch_product_report = async () => {
-        const report_data = await fetchProductReports(selectedProduct.idProducto);
+        const report_data = await fetchProductReports(selectedProduct.IdProducto);
         console.log(report_data);
 
         setData([report_data]);
@@ -27,12 +27,11 @@ const CostFluctuation = () => {
       <div className='card-header'>
         <h2>Promedio mensual costo</h2>
       </div>
-      <div className='card-body'></div>
-      <ProductSearch onSelect={setSelectedProduct} />
-      <div style={{ height: '300px' }}>
+      <div className='card-body'>
+        <ProductSearch onSelect={setSelectedProduct} />
         <ResponsiveLine
           data={data}
-          margin={{ top: 50, right: 50, bottom: 50, left: 60 }}
+          margin={{ top: 20, right: 30, bottom: 80, left: 40 }}
           xScale={{ type: 'point' }}
           yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
           axisTop={null}
