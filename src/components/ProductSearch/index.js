@@ -1,5 +1,5 @@
-import SearchInput from '../SearchInput';
-import { fetchProducts } from '../../api/products';
+import SearchInput from "../SearchInput";
+import { fetchProducts } from "../../api/products";
 
 const ProductSearch = ({ onSelect }) => {
   const loadProductVariants = async (inputValue) => {
@@ -22,14 +22,21 @@ const ProductSearch = ({ onSelect }) => {
   };
 
   const handleSelect = (option, { action }) => {
-    if (action === 'select-option') {
+    if (action === "select-option") {
       onSelect(option.value, action);
-    } else if (action === 'clear') {
+    } else if (action === "clear") {
       onSelect(null, action);
     }
   };
 
-  return <SearchInput loadOptions={loadProductVariants} defaultOptions={false} placeholder='Buscar producto...' onSelect={handleSelect} />;
+  return (
+    <SearchInput
+      loadOptions={loadProductVariants}
+      defaultOptions={false}
+      placeholder="Buscar producto..."
+      onSelect={handleSelect}
+    />
+  );
 };
 
 export default ProductSearch;

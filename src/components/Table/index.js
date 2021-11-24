@@ -1,14 +1,23 @@
-import { useTable, useRowSelect } from 'react-table';
+import { useTable, useRowSelect } from "react-table";
 
-import debounce from 'lodash.debounce';
+import debounce from "lodash.debounce";
 
-const Table = ({ data = [], loading, columns = [], filterPlaceholder, onFilter, maxheight, showFooter = false, onRowSelect }) => {
+const Table = ({
+  data = [],
+  loading,
+  columns = [],
+  filterPlaceholder,
+  onFilter,
+  maxheight,
+  showFooter = false,
+  onRowSelect,
+}) => {
   const { getTableProps, getTableBodyProps, headerGroups, footerGroups, rows, prepareRow, selectedFlatRows } = useTable(
     {
       columns,
       data,
       stateReducer: (newState, action) => {
-        if (action.type === 'toggleRowSelected') {
+        if (action.type === "toggleRowSelected") {
           newState.selectedRowIds = {
             [action.id]: !action.isSelected,
           };
@@ -27,22 +36,22 @@ const Table = ({ data = [], loading, columns = [], filterPlaceholder, onFilter, 
   return (
     <>
       {onFilter && (
-        <div className='table-filter-container'>
+        <div className="table-filter-container">
           <input
-            className='table-filter-input'
+            className="table-filter-input"
             onChange={(event) => onFilterDebounced(event.target.value)}
             placeholder={filterPlaceholder}
             autoFocus
           />
         </div>
       )}
-      <div className='table-container' maxheight={maxheight}>
+      <div className="table-container" maxheight={maxheight}>
         <table {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                  <th {...column.getHeaderProps()}>{column.render("Header")}</th>
                 ))}
               </tr>
             ))}
@@ -64,8 +73,14 @@ const Table = ({ data = [], loading, columns = [], filterPlaceholder, onFilter, 
                 >
                   {row.cells.map((cell, index) => {
                     return (
-                      <td title={cell.value} {...cell.getCellProps()} style={{ background: row.isSelected ? 'lightgreen' : 'white' }}>
-                        {cell.render('Cell')}
+                      <td
+                        title={cell.value}
+                        {...cell.getCellProps()}
+                        style={{
+                          background: row.isSelected ? "lightgreen" : "white",
+                        }}
+                      >
+                        {cell.render("Cell")}
                       </td>
                     );
                   })}
@@ -78,7 +93,7 @@ const Table = ({ data = [], loading, columns = [], filterPlaceholder, onFilter, 
               {footerGroups.map((group) => (
                 <tr {...group.getFooterGroupProps()}>
                   {group.headers.map((column) => (
-                    <td {...column.getFooterProps()}>{column.render('Footer')}</td>
+                    <td {...column.getFooterProps()}>{column.render("Footer")}</td>
                   ))}
                 </tr>
               ))}
@@ -87,7 +102,7 @@ const Table = ({ data = [], loading, columns = [], filterPlaceholder, onFilter, 
         </table>
       </div>
       {loading && (
-        <div className='loading-container' data={data.length ? 1 : 0}>
+        <div className="loading-container" data={data.length ? 1 : 0}>
           Cargando...
         </div>
       )}

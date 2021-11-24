@@ -1,15 +1,14 @@
-body {
-  background: #f6f6f1;
-}
-:root {
-  --lightgray: #f5f8fa;
+html, body {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: rgb(33, 37, 41);
 }
 
-#main {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 1%;
+
+:root {
+  --lightgray: #f5f8fa;
 }
 
 #left-content {
@@ -28,7 +27,7 @@ body {
 }
 
 div.table-container {
-  max-height: 92%;
+  max-height: 350px;
   overflow: auto;
 }
 
@@ -97,7 +96,8 @@ table tfoot td {
 div .card {
   background: white;
   box-shadow: rgb(101 119 134 / 20%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px;
-  border-radius: 16px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
 }
 
 div .card-header {
@@ -105,8 +105,11 @@ div .card-header {
   justify-content: space-between;
   align-items: center;
   flex: 1 0 50px;
-  background: var(--lightgray);
   padding: 10px 20px;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
@@ -115,9 +118,10 @@ div .card-header {
 
 div.card-body {
   height: 400px;
+  padding: 0;
 }
 
-div .card-header h2 {
+div .card-header h3 {
   margin: 0;
 }
 
@@ -133,7 +137,8 @@ div#date-range-container {
   gap: 5px;
   padding-bottom: 10px;
   margin-bottom: 1%;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid white;
+  color: white;
 }
 
 .tooltip-container {
@@ -158,4 +163,15 @@ div#date-range-container {
   #main {
     flex-direction: row;
   }
+}
+
+.nav-link:hover, .nav-link.active {
+	background: lightgray;
+	border-radius: 4px;
+}
+
+
+input[type=text], input[type=search] {
+	outline: none;
+	padding: 5px;
 }

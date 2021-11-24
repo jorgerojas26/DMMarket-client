@@ -1,164 +1,67 @@
-import { useState, useEffect } from 'react';
+import { useState } from "react";
+import Navbar from "react-bootstrap/Navbar";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
 
-import { DateTime } from 'luxon';
+import VentasPage from "./pages/ventas";
+import ClientesPage from "./pages/clientes";
+import ProductosPage from "./pages/productos";
 
-import { fetchInvoiceReport } from './api/invoice';
-
-import { ResponsivePie } from '@nivo/pie';
-
-import SaleReportCard from './components/Cards/SaleReport';
-import ClientReportCard from './components/Cards/ClientReport';
-import CostFluctuation from './components/Cards/CostFluctuation';
-//import ClientRegistration from './components/Cards/ClientRegistration';
-import GroupStock from './components/Cards/GroupStock';
-import ClientPerProductCard from './components/ClientPerProduct/Card';
-
-import { useReportFilter } from './hooks/useReportFilter';
+import { Link, BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
-  const [dateRange, setDateRange] = useState({
-    from: DateTime.now().toISODate(),
-    to: DateTime.now().toISODate(),
-  });
-  const [reportDetails, setReportDetails] = useState({
-    sale_report: [],
-    categories_report: [],
-    client_report: [],
-    new_clients_report: [],
-  });
-  const [chartData, setChartData] = useState({
-    sale_report: [],
-    categories_report: [],
-    client_report: [],
-    buy_price_fluctuation: [],
-    new_clients_report: [],
-  });
-
-  const { filteredData, onFilterDebounced } = useReportFilter(reportDetails, {
-    sale_report: [],
-    categories_report: [],
-    client_report: [],
-    new_clients_report: [],
-  });
-
-  const onSubmit = async (event) => {
-    event.preventDefault();
-
-    const response = await fetchInvoiceReport(dateRange);
-    setReportDetails({ ...response });
-  };
-
-  useEffect(() => {
-    const categories_report_chart_data = reportDetails.categories_report.reduce((acc, current) => {
-      return [...acc, { id: current.categoria, label: current.categoria, value: current.rawProfit, netProfit: current.netProfit }];
-    }, []);
-
-    const client_report_chart_data = reportDetails.client_report.reduce((acc, current) => {
-      return [...acc, { id: current.client, label: current.client, value: current.total_USD }];
-    }, []);
-
-    setChartData({ ...chartData, categories_report: categories_report_chart_data, client_report: client_report_chart_data });
-  }, [reportDetails]);
+  const [activeLink, setActiveLink] = useState("ventas");
 
   return (
-    <div className='App'>
-      <div id='date-range-wrapper'>
-        <div id='date-range-container'>
-          <label>Desde:</label>
-          <input type='date' value={dateRange.from} onChange={(event) => setDateRange({ ...dateRange, from: event.target.value })} />
-          <label>Hasta:</label>
-          <input type='date' value={dateRange.to} onChange={(event) => setDateRange({ ...dateRange, to: event.target.value })} />
-          <input type='submit' onClick={onSubmit} />
-        </div>
-      </div>
-      <main id='main'>
-        <div id='left-content'>
-          <SaleReportCard
-            data={filteredData.sale_report.length ? filteredData.sale_report : reportDetails.sale_report}
-            onFilter={onFilterDebounced}
-          />
-          <ClientReportCard
-            data={filteredData.client_report.length ? filteredData.client_report : reportDetails.client_report}
-            onFilter={(filterValue, filterKey) => onFilterDebounced(filterValue, filterKey)}
-          />
-          <CostFluctuation />
-          {/*
-          <ClientRegistration
-            data={filteredData.new_clients_report.length ? filteredData.new_clients_report : reportDetails.new_clients_report}
-            onFilter={onFilterDebounced}
-          />
-          */}
-        </div>
-        <div id='right-content'>
-          <ClientPerProductCard dateRange={dateRange} />
-          <GroupStock />
-          <div className='card'>
-            <div className='card-header'>
-              <h2>Gráfico de categorías</h2>
-            </div>
-            <div className='card-body'>
-              {chartData.categories_report.length > 0 && (
-                <ResponsivePie
-                  data={chartData.categories_report}
-                  margin={{ top: 30, right: 20, bottom: 20, left: 20 }}
-                  innerRadius={0.5}
-                  padAngle={0.7}
-                  cornerRadius={3}
-                  activeOuterRadiusOffset={8}
-                  arcLabel={function (e) {
-                    return `${e.value} (${e.data.netProfit})`;
-                  }}
-                  borderWidth={1}
-                  borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
-                  arcLinkLabelsSkipAngle={10}
-                  arcLinkLabelsTextColor='#333333'
-                  arcLinkLabelsThickness={2}
-                  arcLinkLabelsColor={{ from: 'color' }}
-                  arcLabelsSkipAngle={10}
-                  arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
-                  tooltip={({ datum }) => {
-                    return (
-                      <div className='tooltip-container'>
-                        <span className='small-square' style={{ background: datum.color }}></span>
-                        <strong>{datum.label}</strong>
-                        <label>Bruto: </label>
-                        <span>${Number(datum.value).toLocaleString()}</span>
-                        <label>Utilidad: </label>
-                        <span>${Number(datum.data.netProfit).toLocaleString()}</span>
-                      </div>
-                    );
-                  }}
-                />
-              )}
-            </div>
-          </div>
-          <div className='card'>
-            <div className='card-header'>
-              <h2>Gráfico de clientes</h2>
-            </div>
-            <div className='card-body'>
-              {chartData.client_report.length > 0 && (
-                <ResponsivePie
-                  data={chartData.client_report}
-                  margin={{ top: 30, right: 20, bottom: 20, left: 20 }}
-                  innerRadius={0.5}
-                  padAngle={0.7}
-                  cornerRadius={3}
-                  activeOuterRadiusOffset={8}
-                  borderWidth={1}
-                  borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
-                  arcLinkLabelsSkipAngle={10}
-                  arcLinkLabelsTextColor='#333333'
-                  arcLinkLabelsThickness={2}
-                  arcLinkLabelsColor={{ from: 'color' }}
-                  arcLabelsSkipAngle={10}
-                  arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
-                />
-              )}
-            </div>
-          </div>
-        </div>
-      </main>
+    <div className="App bg-dark">
+      <Container fluid id="main" className="m-0 p-0 vh-100">
+        <Router>
+          <Navbar bg="dark" variant="dark" className="border-bottom">
+            <Container fluid>
+              <Navbar.Brand>SISTEMA DE REPORTES</Navbar.Brand>
+              <Nav
+                className="me-auto"
+                onClick={(event) => {
+                  if (event.target.tagName === "A") {
+                    setActiveLink(event.target.href);
+                  }
+                }}
+              >
+                <Link
+                  to="/ventas"
+                  className={`text-decoration-none text-secondary nav-link ${
+                    (activeLink.includes("ventas") && "active") || ""
+                  }`}
+                >
+                  Ventas
+                </Link>
+                <Link
+                  to="/clientes"
+                  className={`text-decoration-none text-secondary nav-link ${
+                    (activeLink.includes("clientes") && "active") || ""
+                  }`}
+                >
+                  Clientes
+                </Link>
+                <Link
+                  to="/productos"
+                  className={`text-decoration-none text-secondary nav-link ${
+                    (activeLink.includes("productos") && "active") || ""
+                  }`}
+                >
+                  Productos
+                </Link>
+              </Nav>
+            </Container>
+          </Navbar>
+
+          <Switch>
+            <Route path="/ventas" component={VentasPage} />
+            <Route path="/clientes" component={ClientesPage} />
+            <Route path="/productos" component={ProductosPage} />
+          </Switch>
+        </Router>
+      </Container>
     </div>
   );
 }
