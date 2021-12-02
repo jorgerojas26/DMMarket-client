@@ -1,7 +1,7 @@
-const BASE_URL = "/api/clients";
+const BASE_URL = '/api/clients';
 
 export const fetchClients = async ({ filter }) => {
-  const filterParam = filter ? `?filter=${filter}` : "";
+  const filterParam = filter ? `?filter=${filter}` : '';
   const response = await fetch(`${BASE_URL}${filterParam}`);
   const clients = response.json();
   return clients;

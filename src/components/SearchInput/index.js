@@ -8,7 +8,7 @@ const SearchInput = ({ placeholder, loadOptions, defaultOptions = true, cacheOpt
       cacheOptions={cacheOptions}
       defaultOptions={defaultOptions}
       placeholder={placeholder}
-      onChange={onSelect}
+      onChange={onSelect ? onSelect : null}
       loadingMessage={() => {
         return 'Cargando...';
       }}

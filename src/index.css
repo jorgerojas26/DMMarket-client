@@ -1,11 +1,11 @@
-html, body {
+html,
+body {
   width: 100% !important;
   height: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
   background: rgb(33, 37, 41);
 }
-
 
 :root {
   --lightgray: #f5f8fa;
@@ -27,7 +27,6 @@ html, body {
 }
 
 div.table-container {
-  max-height: 350px;
   overflow: auto;
 }
 
@@ -42,6 +41,7 @@ table {
   text-align: center;
   border-collapse: collapse;
   padding-bottom: 5px;
+  border: 1px solid lightgray;
 }
 
 table th {
@@ -104,16 +104,18 @@ div .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex: 1 0 50px;
-  padding: 10px 20px;
-
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  padding: 10px;
+  flex-wrap: wrap;
 
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   border-bottom: 1px solid #aab8c2;
+}
+
+div .card-header h3 {
+  white-space: wrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 div.card-body {
@@ -123,22 +125,6 @@ div.card-body {
 
 div .card-header h3 {
   margin: 0;
-}
-
-div#date-range-wrapper {
-  display: flex;
-  justify-content: center;
-}
-
-div#date-range-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  padding-bottom: 10px;
-  margin-bottom: 1%;
-  border-bottom: 1px solid white;
-  color: white;
 }
 
 .tooltip-container {
@@ -165,13 +151,14 @@ div#date-range-container {
   }
 }
 
-.nav-link:hover, .nav-link.active {
-	background: lightgray;
-	border-radius: 4px;
+.nav-link:hover,
+.nav-link.active {
+  background: lightgray;
+  border-radius: 4px;
 }
 
-
-input[type=text], input[type=search] {
-	outline: none;
-	padding: 5px;
+input[type='text'],
+input[type='search'] {
+  outline: none;
+  padding: 5px;
 }

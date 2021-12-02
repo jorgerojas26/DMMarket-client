@@ -1,13 +1,12 @@
-import { ResponsivePie } from "@nivo/pie";
+import { ResponsivePie } from '@nivo/pie';
 
-const GroupSales = ({ chartData = [] }) => {
-  console.log(chartData);
+const GroupSales = ({ chartData = [], loading }) => {
   return (
-    <div className="card">
-      <div className="card-header">
+    <div className='card'>
+      <div className='card-header'>
         <h3>Gráfico de categorías</h3>
       </div>
-      <div className="card-body">
+      <div className='card-body'>
         {chartData.length > 0 && (
           <ResponsivePie
             data={chartData}
@@ -21,18 +20,18 @@ const GroupSales = ({ chartData = [] }) => {
             }}
             borderWidth={1}
             arcLinkLabelsSkipAngle={10}
-            arcLinkLabelsTextColor="#333333"
+            arcLinkLabelsTextColor='#333333'
             arcLinkLabelsThickness={2}
-            arcLinkLabelsColor={{ from: "color" }}
+            arcLinkLabelsColor={{ from: 'color' }}
             arcLabelsSkipAngle={10}
             arcLabelsTextColor={{
-              from: "color",
-              modifiers: [["darker", 2]],
+              from: 'color',
+              modifiers: [['darker', 2]],
             }}
             tooltip={({ datum }) => {
               return (
-                <div className="tooltip-container">
-                  <span className="small-square" style={{ background: datum.color }}></span>
+                <div className='tooltip-container'>
+                  <span className='small-square' style={{ background: datum.color }}></span>
                   <strong>{datum.label}</strong>
                   <label>Bruto: </label>
                   <span>${Number(datum.value).toLocaleString()}</span>
@@ -42,6 +41,11 @@ const GroupSales = ({ chartData = [] }) => {
               );
             }}
           />
+        )}
+        {loading && (
+          <div className='position-absolute top-50 start-50 translate-middle'>
+            <span className='spinner-border spinner-border-md' role='status' aria-hidden='true' />
+          </div>
         )}
       </div>
     </div>

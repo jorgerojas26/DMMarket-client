@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import Table from '../Table';
+import Table from 'components/Table';
 import columns from './columns';
 
 const ClientReportTable = ({ data }) => {
-  const memoizedColumns = useMemo(() => columns);
+    const memoizedColumns = useMemo(() => columns, []);
 
-  return <Table data={data} columns={memoizedColumns} showFooter />;
+    return <Table data={data} columns={memoizedColumns} showFooter />;
 };
 
 export default ClientReportTable;

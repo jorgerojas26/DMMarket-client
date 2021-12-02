@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
-import { ResponsivePie } from "@nivo/pie";
-import { fetchCostPerGroup } from "../../../api/products";
+import { useEffect, useState } from 'react';
+import { ResponsivePie } from '@nivo/pie';
+import { fetchCostPerGroup } from 'api/products';
 
 const ProductCostPerGroupCard = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
+      setLoading(true);
       const response = await fetchCostPerGroup();
       if (response && response.length) {
         const chartData = response.reduce(
@@ -23,16 +25,17 @@ const ProductCostPerGroupCard = () => {
         console.log(response, chartData);
         setData(chartData);
       }
+      setLoading(false);
     };
     fetch();
   }, []);
 
   return (
-    <div className="card">
-      <div className="card-header">
+    <div className='card'>
+      <div className='card-header'>
         <h3>Inversión por categoría</h3>
       </div>
-      <div className="card-body">
+      <div className='card-body'>
         {data.length > 0 && (
           <ResponsivePie
             data={data}
@@ -44,15 +47,20 @@ const ProductCostPerGroupCard = () => {
             activeOuterRadiusOffset={8}
             borderWidth={1}
             arcLinkLabelsSkipAngle={10}
-            arcLinkLabelsTextColor="#333333"
+            arcLinkLabelsTextColor='#333333'
             arcLinkLabelsThickness={2}
-            arcLinkLabelsColor={{ from: "color" }}
+            arcLinkLabelsColor={{ from: 'color' }}
             arcLabelsSkipAngle={10}
             arcLabelsTextColor={{
-              from: "color",
-              modifiers: [["darker", 2]],
+              from: 'color',
+              modifiers: [['darker', 2]],
             }}
           />
+        )}
+        {loading && (
+          <div className='position-absolute top-50 start-50 translate-middle'>
+            <span className='spinner-border spinner-border-md' role='status' aria-hidden='true' />
+          </div>
         )}
       </div>
     </div>

@@ -1,11 +1,11 @@
-import { useMemo } from "react";
-import Table from "../Table";
-import columns from "./columns";
+import { useMemo } from 'react';
+import Table from 'components/Table';
+import columns from './columns';
 
-const SaleReportTable = ({ data }) => {
-  const memoizedColumns = useMemo(() => columns);
+const SaleReportTable = ({ data, loading }) => {
+  const memoizedColumns = useMemo(() => columns, []);
 
-  return <Table data={data} columns={memoizedColumns} showFooter />;
+  return <Table data={data} columns={memoizedColumns} showFooter loading={loading} />;
 };
 
 export default SaleReportTable;
