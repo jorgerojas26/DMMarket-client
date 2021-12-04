@@ -24,12 +24,7 @@ const DatePicker = ({ onSubmit, loading, submitDisabled }) => {
           onChange={(event) => setDateRange({ ...dateRange, to: event.target.value })}
         />
       </div>
-      <Button
-        variant='primary'
-        onClick={(event) => onSubmit(event, dateRange)}
-        disabled={loading}
-        disabled={submitDisabled}
-      >
+      <Button variant='primary' onClick={(event) => onSubmit(event, dateRange)} disabled={loading || submitDisabled}>
         {loading && (
           <div>
             <span className='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>

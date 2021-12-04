@@ -7,6 +7,7 @@ import { DateTime } from 'luxon';
 import PriceListPDF from 'components/PDF/PriceList';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { fetchProductsByGroup } from 'api/products';
+import { Button } from 'react-bootstrap';
 
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -27,14 +28,18 @@ const GroupStock = () => {
   const { filteredData, setFilteredData, onFilterDebounced } = useReportFilter(data);
   const inputRef = useRef(null);
   const [printPDF, setPrintPDF] = useState(false);
+  const [pdfLoading, setPdfLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (selectedGroup) {
       const fetch_stock_by_group = async () => {
+        setLoading(true);
         const data = await fetchProductPriceList(selectedGroup.groupId);
         setFilteredData([]);
         inputRef.current.value = '';
         setData([...data]);
+        setLoading(false);
       };
 
       fetch_stock_by_group();
@@ -47,6 +52,7 @@ const GroupStock = () => {
   useEffect(() => {
     if (printPDF) {
       const fetch_product_data = async () => {
+        setPdfLoading(true);
         const groups = await fetchProductsByGroup();
         var div = document.createElement('div');
         doc.setFontSize(16);
@@ -86,6 +92,7 @@ const GroupStock = () => {
         });
         doc.save(pdfName);
         setPrintPDF(false);
+        setPdfLoading(false);
       };
       fetch_product_data();
     }
@@ -95,7 +102,16 @@ const GroupStock = () => {
     <div className='card'>
       <div className='card-header'>
         <h3>Lista de precios por categoría</h3>
-        <button onClick={() => setPrintPDF(true)}>Imprimir</button>
+        <Button variant='primary' disabled={pdfLoading} onClick={() => setPrintPDF(true)}>
+          {pdfLoading && (
+            <div className='d-flex gap-1 align-items-center'>
+              <span className='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>
+              <span>Imprimir</span>
+              <span className='visually-hidden'>Loading...</span>
+            </div>
+          )}
+          {!pdfLoading && <span>Imprimir</span>}
+        </Button>
       </div>
       <div className='card-body'>
         <div
@@ -116,7 +132,7 @@ const GroupStock = () => {
             }}
           />
         </div>
-        <PriceListTable data={filteredData.length > 0 ? filteredData : data} />
+        <PriceListTable data={filteredData.length > 0 ? filteredData : data} loading={loading} />
       </div>
     </div>
   );
