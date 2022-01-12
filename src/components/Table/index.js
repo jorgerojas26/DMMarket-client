@@ -13,7 +13,7 @@ const Table = ({
   showFooter = false,
   onRowSelect,
 }) => {
-  const { getTableProps, getTableBodyProps, headerGroups, footerGroups, rows, prepareRow, selectedFlatRows } = useTable(
+  const { getTableProps, getTableBodyProps, headerGroups, footerGroups, rows, prepareRow } = useTable(
     {
       columns,
       data,

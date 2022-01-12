@@ -12,7 +12,10 @@ const MonthlyAverageClient = () => {
     if (selectedClient) {
       setLoading(true);
       fetchMonthlyAverage(selectedClient.IdCliente).then((response) => {
-        setData([response]);
+        console.log(response);
+        if (Object.keys(response).length > 0) {
+          setData([response]);
+        }
         setLoading(false);
       });
     } else {

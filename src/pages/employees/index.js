@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState } from 'react';
 import EmployeeSalesTable from 'employees/Table/Sales';
 import EmployeeActions from 'employees/Actions';
 

@@ -13,7 +13,9 @@ const CostFluctuation = () => {
       const fetch_product_report = async () => {
         setLoading(true);
         const report_data = await fetchCostFluctuation(selectedProduct.IdProducto);
-        setData([report_data]);
+        if (Object.keys(report_data).length > 0) {
+          setData([report_data]);
+        }
         setLoading(false);
       };
 

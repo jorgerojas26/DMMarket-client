@@ -6,7 +6,6 @@ import CommissionModal from 'employees/Modal/Commission';
 import { getEmployeeSales } from 'api/employees';
 
 const EmployeeActions = ({ onDateSubmit }) => {
-  const [employeeSales, setEmployeeSales] = useState([]);
   const [employeeSalesLoading, setEmployeeSalesLoading] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [showCommissionModal, setShowCommissionModal] = useState(false);
@@ -16,7 +15,6 @@ const EmployeeActions = ({ onDateSubmit }) => {
     if (selectedEmployee) {
       setEmployeeSalesLoading(true);
       getEmployeeSales(selectedEmployee.id, dateRange).then((response) => {
-        setEmployeeSales(response);
         setEmployeeSalesLoading(false);
         onDateSubmit(response);
       });

@@ -43,6 +43,7 @@ const ClientesPage = () => {
           <ClientReportCard
             data={data.filtered_best_clients.length > 0 ? data.filtered_best_clients : data.best_clients}
             onFilter={onFilter}
+            loading={loading}
           />
         </div>
         <div className='col-12 col-xl-4'>

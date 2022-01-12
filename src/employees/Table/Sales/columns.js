@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 
-export default [
+const columns = [
   {
     Header: 'ID',
     accessor: 'invoiceId',
@@ -50,3 +50,5 @@ export default [
     },
   },
 ];
+
+export default columns;
