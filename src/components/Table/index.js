@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import React from 'react';
 import { useTable, useRowSelect } from 'react-table';
 
@@ -12,8 +13,9 @@ const Table = ({
   maxHeight = 350,
   showFooter = false,
   onRowSelect,
+  multiSelect = false,
 }) => {
-  const { getTableProps, getTableBodyProps, headerGroups, footerGroups, rows, prepareRow } = useTable(
+  const { getTableProps, getTableBodyProps, headerGroups, footerGroups, rows, prepareRow, state } = useTable(
     {
       columns,
       data,
@@ -21,9 +23,21 @@ const Table = ({
     useRowSelect
   );
 
+  console.log('table state', state);
+
   const onFilterDebounced = debounce((value) => {
     onFilter(value);
   }, 500);
+
+  useEffect(() => {
+    console.log('holaaaaaaaaa');
+    if (multiSelect) {
+      const selectedRows = rows.filter((row) => row.isSelected);
+      onRowSelect(selectedRows.map((row) => row.original));
+    } else {
+      onRowSelect && onRowSelect(rows.find((row) => row.isSelected)?.original);
+    }
+  }, [state, multiSelect, onRowSelect]);
 
   const MemoizedRow = React.memo(
     ({ row }) => {
@@ -31,9 +45,38 @@ const Table = ({
         <tr
           {...row.getRowProps({
             onClick: onRowSelect
-              ? () => {
-                  row.toggleRowSelected();
-                  onRowSelect(!row.isSelected ? row.original : null);
+              ? (e) => {
+                  const lastSelectedRowIndex = Object.keys(state.selectedRowIds)[
+                    Object.keys(state.selectedRowIds).length - 1
+                  ];
+                  const newSelectedRowIndex = row.index;
+
+                  if (e.ctrlKey && !e.shiftKey) {
+                    row.toggleRowSelected();
+                  } else if (e.shiftKey && !e.ctrlKey) {
+                    if (multiSelect) {
+                      if (newSelectedRowIndex >= lastSelectedRowIndex) {
+                        for (let i = lastSelectedRowIndex; i <= newSelectedRowIndex; i++) {
+                          if (i !== lastSelectedRowIndex) {
+                            rows[i].toggleRowSelected();
+                          }
+                        }
+                      } else {
+                        for (let i = lastSelectedRowIndex; i >= newSelectedRowIndex; i--) {
+                          if (i !== lastSelectedRowIndex) {
+                            rows[i].toggleRowSelected();
+                          }
+                        }
+                      }
+                    }
+                  } else {
+                    if (row.isSelected) {
+                      row.toggleRowSelected();
+                    } else {
+                      state.selectedRowIds = {};
+                      row.toggleRowSelected();
+                    }
+                  }
                 }
               : null,
           })}

@@ -33,7 +33,7 @@ const SaleReportCard = ({ data = [], onFilter, loading }) => {
           type='search'
           onChange={(event) => onFilter(event.target.value)}
         />
-          <SaleReportTable data={sortedData} loading={loading} />
+        <SaleReportTable data={sortedData} loading={loading} />
       </div>
     </div>
   );

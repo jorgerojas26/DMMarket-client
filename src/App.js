@@ -2,6 +2,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 
+import InvoicesPage from 'pages/invoices';
 import VentasPage from 'pages/ventas';
 import ClientesPage from 'pages/clientes';
 import ProductosPage from 'pages/productos';
@@ -23,7 +24,7 @@ function App() {
             <Navbar.Collapse id='basic-navbar-nav'>
               <Container fluid>
                 <Nav className='me-auto'>
-                  {['ventas', 'clientes', 'productos', 'vendedores'].map((route, index) => {
+                  {['facturas', 'ventas', 'clientes', 'productos', 'vendedores'].map((route, index) => {
                     return (
                       <Link
                         key={index}
@@ -44,6 +45,7 @@ function App() {
 
         <Container fluid className='py-3'>
           <Switch>
+            <Route path='/facturas' component={InvoicesPage} />
             <Route path='/ventas' component={VentasPage} />
             <Route path='/clientes' component={ClientesPage} />
             <Route path='/productos' component={ProductosPage} />
