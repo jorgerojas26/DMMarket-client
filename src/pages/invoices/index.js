@@ -25,13 +25,21 @@ const InvoicesPage = () => {
         }
 
         products[product.productId].quantity += product.quantity;
+        products[product.productId].total = products[product.productId].quantity * products[product.productId].price;
+        products[product.productId].total = products[product.productId].total.toFixed(2);
       });
     });
     //convert products to an array
     return Object.values(products);
   }, [selectedRows]);
 
-  console.log('productsSummary', productsSummary);
+  const invoicesTotalSummary = useMemo(() => {
+    if (!selectedRows || selectedRows.length === 0) return 0;
+
+    return selectedRows.reduce((total, invoice) => total + invoice?.total, 0);
+  }, [selectedRows]);
+
+  console.log('invoicesTotalSummary', invoicesTotalSummary);
 
   const onSubmit = async (event, dateRange) => {
     event.preventDefault();
@@ -50,7 +58,7 @@ const InvoicesPage = () => {
           <InvoicesTable data={invoices} loading={loading} onRowSelect={setSelectedRows} />
         </div>
         <div className='col-12 col-xl-6'>
-          <ProductsTable data={productsSummary} loading={loading} />
+          <ProductsTable data={productsSummary} loading={loading} totalSummary={invoicesTotalSummary} />
         </div>
       </div>
     </Container>

@@ -23,14 +23,11 @@ const Table = ({
     useRowSelect
   );
 
-  console.log('table state', state);
-
   const onFilterDebounced = debounce((value) => {
     onFilter(value);
   }, 500);
 
   useEffect(() => {
-    console.log('holaaaaaaaaa');
     if (multiSelect) {
       const selectedRows = rows.filter((row) => row.isSelected);
       onRowSelect(selectedRows.map((row) => row.original));
