@@ -15,8 +15,23 @@ const ProductsTable = ({ data, totalSummary }) => {
     }, 0);
   }, [data]);
 
+  const sortedData = useMemo(() => {
+    if (!data) return [];
+
+    return data.sort((a, b) => {
+      return (
+        a.group.toLowerCase().localeCompare(b.group.toLowerCase()) ||
+        a.product.toLowerCase().localeCompare(b.product.toLowerCase())
+      );
+    });
+  }, [data]);
+
   const memoizedColumns = useMemo(
     () => [
+      {
+        Header: 'Categoría',
+        accessor: 'group',
+      },
       {
         Header: 'ID',
         accessor: 'productId',
@@ -29,22 +44,24 @@ const ProductsTable = ({ data, totalSummary }) => {
         Header: 'Cantidad',
         accessor: 'quantity',
         Footer: () => {
-          return <span>{quantityTotal.toFixed(2)}</span>;
+          return <span>{quantityTotal ? quantityTotal.toFixed(2) : ''}</span>;
         },
       },
       {
         Header: 'Total',
         accessor: 'total',
         Footer: () => {
-          return <span>${totalSummary.toFixed(2)}</span>;
+          return <span>${totalSummary ? totalSummary.toFixed(2) : ''}</span>;
         },
       },
     ],
     [totalSummary, quantityTotal]
   );
 
+  console.log(sortedData);
+
   const exportToPDF = () => {
-    const pdfData = pdf(data, quantityTotal, totalSummary);
+    const pdfData = pdf(sortedData, quantityTotal, totalSummary);
 
     pdfMake.createPdf(pdfData).open();
   };
@@ -58,7 +75,7 @@ const ProductsTable = ({ data, totalSummary }) => {
         </div>
       </Card.Header>
       <Card.Body>
-        <Table data={data} columns={memoizedColumns} showFooter />
+        <Table data={sortedData} columns={memoizedColumns} showFooter />
       </Card.Body>
     </Card>
   );

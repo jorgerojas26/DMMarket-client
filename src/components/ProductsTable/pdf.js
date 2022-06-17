@@ -12,11 +12,11 @@ const pdfschema = (productList, quantityTotal, totalSummary) => ({
     {
       style: 'table',
       table: {
-        widths: ['*', 'auto', 'auto'],
+        widths: [85, '*', 'auto', 'auto'],
         body: [
-          ['PRODUCTO', 'CANTIDAD', 'TOTAL'],
-          ...productList.map(({ product, quantity, total }) => [product, quantity, total]),
-          ['', { text: quantityTotal, bold: true }, { text: `$${totalSummary}`, bold: true }],
+          ['CATEGORÍA', 'PRODUCTO', 'CANTIDAD', 'TOTAL'],
+          ...productList.map(({ group, product, quantity, total }) => [group, product, quantity, total]),
+          ['', '', { text: quantityTotal, bold: true }, { text: `$${totalSummary}`, bold: true }],
         ],
       },
     },

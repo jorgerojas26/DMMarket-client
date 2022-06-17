@@ -39,8 +39,6 @@ const InvoicesPage = () => {
     return selectedRows.reduce((total, invoice) => total + invoice?.total, 0);
   }, [selectedRows]);
 
-  console.log('invoicesTotalSummary', invoicesTotalSummary);
-
   const onSubmit = async (event, dateRange) => {
     event.preventDefault();
 
