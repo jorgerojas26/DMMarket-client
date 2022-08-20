@@ -1,11 +1,11 @@
-const PriceListPDF = ({ data = [], group = '' }) => {
+const PriceListPDF = ({ data = [], group = '', currency }) => {
   return (
     <table id='price-list-table'>
       <thead>
         <tr>
           <th>Categoría</th>
           <th>Producto</th>
-          <th>Precio (USD)</th>
+          <th>{`Precio (${currency})`}</th>
           <th>DISPONIBLE</th>
         </tr>
       </thead>

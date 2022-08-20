@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 
-const pdfschema = (productList, quantityTotal, totalSummary) => ({
+const pdfschema = (productList, quantityTotal, totalSummary, currency) => ({
   content: [
     { text: 'ALIMENTOS DM MARKET, C.A.', style: 'header' },
     {
@@ -14,9 +14,9 @@ const pdfschema = (productList, quantityTotal, totalSummary) => ({
       table: {
         widths: [85, '*', 'auto', 'auto'],
         body: [
-          ['CATEGORÍA', 'PRODUCTO', 'CANTIDAD', 'TOTAL'],
+          ['CATEGORÍA', 'PRODUCTO', 'CANTIDAD', `TOTAL (${currency})`],
           ...productList.map(({ group, product, quantity, total }) => [group, product, quantity, total]),
-          ['', '', { text: quantityTotal, bold: true }, { text: `$${totalSummary}`, bold: true }],
+          ['', '', { text: quantityTotal, bold: true }, { text: `${currency} ${totalSummary}`, bold: true }],
         ],
       },
     },

@@ -4,11 +4,14 @@ import './index.css';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter } from 'react-router-dom';
+import { CurrencyRateProvider } from './context/currency_rate';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <CurrencyRateProvider>
+        <App />
+      </CurrencyRateProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
