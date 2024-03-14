@@ -15,10 +15,11 @@ const Table = ({
   onRowSelect,
   multiSelect = false,
 }) => {
+  console.log(data)
   const { getTableProps, getTableBodyProps, headerGroups, footerGroups, rows, prepareRow, state } = useTable(
     {
       columns,
-      data,
+      data: data ?? [],
     },
     useRowSelect
   );

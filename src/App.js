@@ -12,13 +12,15 @@ import ClientesPage from 'pages/clientes';
 import ProductosPage from 'pages/productos';
 import EmployeesPage from 'pages/employees';
 
+import { ShowNoeContext } from 'context/show_noe';
+
 import { Link, Switch, Route, useLocation } from 'react-router-dom';
 import { fetchCurrencyRates } from './api/currency_rates';
 
 function App() {
   const location = useLocation();
-
   const { currencyRate, setCurrencyRate } = useContext(CurrencyRateContext);
+  const { showNoe, setShowNoe } = useContext(ShowNoeContext);
 
   useEffect(() => {
     fetchCurrencyRates().then((response) => {
@@ -37,7 +39,7 @@ function App() {
 
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav'>
-              <Container fluid className='d-flex justify-content-between align-items-center'>
+              <Container fluid className='d-flex gap-5 justify-content-between align-items-center'>
                 <Nav className='me-auto'>
                   {['facturas', 'ventas', 'clientes', 'productos', 'vendedores'].map((route, index) => {
                     return (
@@ -53,6 +55,16 @@ function App() {
                     );
                   })}
                 </Nav>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                  <span className='text-light'>Facturas</span>
+                  <div>
+                    <label className='switch'>
+                      <input type='checkbox' checked={showNoe} onChange={(e) => setShowNoe(e.target.checked)} />
+                      <span className='slider round'></span>
+                    </label>
+                  </div>
+                  <span className='text-light'>Notas de entrega</span>
+                </div>
                 <div className='text-light'>
                   <span>
                     REF: <span className='fw-bold text-info'>{currencyRate?.Cambio}</span> {currencyRate?.Simbolo}

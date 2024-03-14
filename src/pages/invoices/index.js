@@ -1,14 +1,16 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useContext } from 'react';
 import { Container } from 'react-bootstrap';
 import DatePicker from 'components/DatePicker';
 import { fetchInvoiceList } from '../../api/invoice';
 import InvoicesTable from 'components/InvoicesTable';
 import ProductsTable from 'components/ProductsTable';
+import { ShowNoeContext } from 'context/show_noe';
 
 const InvoicesPage = () => {
   const [loading, setLoading] = useState(false);
   const [invoices, setInvoices] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
+  const { showNoe } = useContext(ShowNoeContext);
 
   const productsSummary = useMemo(() => {
     if (!selectedRows || selectedRows.length === 0) return [];
@@ -41,9 +43,8 @@ const InvoicesPage = () => {
 
   const onSubmit = async (event, dateRange) => {
     event.preventDefault();
-
     setLoading(true);
-    const response = await fetchInvoiceList(dateRange);
+    const response = await fetchInvoiceList(dateRange, showNoe);
     setInvoices(response);
     setLoading(false);
   };

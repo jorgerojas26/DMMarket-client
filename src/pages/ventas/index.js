@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import SaleReportCard from 'components/Cards/SaleReport';
 import GroupSales from 'components/Cards/GroupSales';
 import DatePicker from 'components/DatePicker';
 import { fetchInvoiceReport } from 'api/invoice';
 import debounce from 'lodash.debounce';
+import { ShowNoeContext } from 'context/show_noe';
 
 const VentasPage = () => {
   const [data, setData] = useState({
@@ -13,6 +14,8 @@ const VentasPage = () => {
     group_sales_chart: [],
   });
   const [loading, setLoading] = useState(false);
+
+  const { showNoe } = useContext(ShowNoeContext);
 
   const onFilter = debounce((searchTerm) => {
     const filteredData = data.invoices_report.filter((f) => f.product.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -23,7 +26,7 @@ const VentasPage = () => {
     event.preventDefault();
 
     setLoading(true);
-    const response = await fetchInvoiceReport(dateRange);
+    const response = await fetchInvoiceReport(dateRange, showNoe);
     const chartData = response.group_sales_chart_data.reduce(
       (acc, current) => [
         ...acc,

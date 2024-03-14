@@ -25,10 +25,10 @@ export const updateComisionInfo = async (employeeId, data) => {
   return response;
 };
 
-export const getEmployeeSales = async (employeeId, dateRange) => {
-  const response = await fetch(`${BASE_URL}/sales/${employeeId}?from=${dateRange.from}&to=${dateRange.to}`).catch(
-    (error) => ({ error })
-  );
+export const getEmployeeSales = async (employeeId, dateRange, showNoe) => {
+  const response = await fetch(
+    `${BASE_URL}/sales/${employeeId}?from=${dateRange.from}&to=${dateRange.to}&showNoe=${showNoe}`
+  ).catch((error) => ({ error }));
   const sales = await response.json();
   return sales;
 };

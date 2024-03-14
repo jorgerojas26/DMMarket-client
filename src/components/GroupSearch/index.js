@@ -1,37 +1,41 @@
 import SearchInput from 'components/SearchInput';
 import { fetchGroups } from 'api/groups';
+import { useContext } from 'react';
+import { ShowNoeContext } from 'context/show_noe';
 
 const GroupSearch = ({ onSelect }) => {
-    const loadGroups = async (inputValue) => {
-        let groups = await fetchGroups({ filter: inputValue });
+  const { showNoe } = useContext(ShowNoeContext);
 
-        if (groups && groups.length > 0) {
-            const records = groups.map((record) => {
-                const group = {
-                    key: record.groupId,
-                    label: record.name,
-                    value: record,
-                };
-                return group;
-            });
+  const loadGroups = async (inputValue) => {
+    let groups = await fetchGroups({ filter: inputValue, showNoe });
 
-            return records;
-        }
-    };
+    if (groups && groups.length > 0) {
+      const records = groups.map((record) => {
+        const group = {
+          key: record.groupId,
+          label: record.name,
+          value: record,
+        };
+        return group;
+      });
 
-    const handleSelect = (option, { action }) => {
-        if (action === 'select-option') {
-            onSelect(option.value, action);
-        } else if (action === 'clear') {
-            onSelect(null, action);
-        }
-    };
+      return records;
+    }
+  };
 
-    return (
-        <div style={{ width: '100%' }}>
-            <SearchInput loadOptions={loadGroups} placeholder='Buscar categoría...' onSelect={handleSelect} />
-        </div>
-    );
+  const handleSelect = (option, { action }) => {
+    if (action === 'select-option') {
+      onSelect(option.value, action);
+    } else if (action === 'clear') {
+      onSelect(null, action);
+    }
+  };
+
+  return (
+    <div style={{ width: '100%' }}>
+      <SearchInput loadOptions={loadGroups} placeholder='Buscar categoría...' onSelect={handleSelect} />
+    </div>
+  );
 };
 
 export default GroupSearch;

@@ -20,8 +20,6 @@ const ClientPerProductCard = ({ dateRange }) => {
       setData([]);
     }
   }, [selectedProduct, dateRange]);
-  console.log(data);
-
   return (
     <div className='card'>
       <div className='card-header'>
