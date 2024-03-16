@@ -29,7 +29,12 @@ const GroupSearch = ({ onSelect }) => {
 
     return (
         <div style={{ width: '100%' }}>
-            <SearchInput loadOptions={loadGroups} placeholder='Buscar categoría...' onSelect={handleSelect} />
+            <SearchInput
+                loadOptions={loadGroups}
+                placeholder='Buscar categoría...'
+                onSelect={handleSelect}
+                isSearchable={false}
+            />
         </div>
     );
 };
