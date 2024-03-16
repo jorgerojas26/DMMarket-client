@@ -6,20 +6,22 @@ export const fetchClients = async ({ filter }) => {
   const clients = response.json();
   return clients;
 };
-export const fetchBestClients = async (dateRange) => {
-  const response = await fetch(`${BASE_URL}/best/?from=${dateRange.from}&to=${dateRange.to}`);
+export const fetchBestClients = async (dateRange, showNoe) => {
+  const response = await fetch(`${BASE_URL}/best/?from=${dateRange.from}&to=${dateRange.to}&showNoe=${showNoe}`);
   const report = response.json();
   return report;
 };
 
-export const fetchBestClientsPerProduct = async (productId, dateRange) => {
-  const response = await fetch(`${BASE_URL}/best/product/${productId}?from=${dateRange.from}&to=${dateRange.to}`);
+export const fetchBestClientsPerProduct = async (productId, dateRange, showNoe) => {
+  const response = await fetch(
+    `${BASE_URL}/best/product/${productId}?from=${dateRange.from}&to=${dateRange.to}&showNoe=${showNoe}`
+  );
   const report = response.json();
   return report;
 };
 
-export const fetchMonthlyAverage = async (clientId) => {
-  const response = await fetch(`${BASE_URL}/average/month/${clientId}`);
+export const fetchMonthlyAverage = async (clientId, showNoe) => {
+  const response = await fetch(`${BASE_URL}/average/month/${clientId}?showNoe=${showNoe}`);
   const report = response.json();
   return report;
 };

@@ -1,9 +1,13 @@
 import SearchInput from 'components/SearchInput';
 import { fetchGroups } from 'api/groups';
+import { useContext } from 'react';
+import { ShowNoeContext } from 'context/show_noe';
 
 const GroupSearch = ({ onSelect }) => {
+    const { showNoe } = useContext(ShowNoeContext);
+
     const loadGroups = async (inputValue) => {
-        let groups = await fetchGroups({ filter: inputValue });
+        let groups = await fetchGroups({ filter: inputValue, showNoe });
 
         if (groups && groups.length > 0) {
             const records = groups.map((record) => {

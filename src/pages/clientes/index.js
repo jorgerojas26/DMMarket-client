@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import ClientReportCard from 'components/Cards/ClientReport';
 import ClientPerProductCard from 'components/ClientPerProduct/Card';
@@ -7,6 +7,7 @@ import DatePicker from 'components/DatePicker';
 import { fetchBestClients } from 'api/clients';
 import { DateTime } from 'luxon';
 import debounce from 'lodash.debounce';
+import { ShowNoeContext } from 'context/show_noe';
 
 const ClientesPage = () => {
   const [data, setData] = useState({
@@ -20,6 +21,8 @@ const ClientesPage = () => {
   });
   const [loading, setLoading] = useState(false);
 
+    const {showNoe} = useContext(ShowNoeContext)
+
   const onFilter = debounce((searchTerm) => {
     const filteredData = data.best_clients.filter((f) => f.client.toLowerCase().includes(searchTerm.toLowerCase()));
     setData({ ...data, filtered_best_clients: filteredData });
@@ -29,7 +32,7 @@ const ClientesPage = () => {
     event.preventDefault();
 
     setLoading(true);
-    const response = await fetchBestClients(dateRange);
+    const response = await fetchBestClients(dateRange, showNoe);
     setDateRange(dateRange);
     setData({ ...data, best_clients: response });
     setLoading(false);
