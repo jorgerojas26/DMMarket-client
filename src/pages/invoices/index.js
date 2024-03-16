@@ -44,7 +44,7 @@ const InvoicesPage = () => {
   const onSubmit = async (event, dateRange) => {
     event.preventDefault();
     setLoading(true);
-    const response = await fetchInvoiceList(dateRange, showNoe);
+    const response = await fetchInvoiceList({ ...dateRange, showNoe });
     setInvoices(response);
     setLoading(false);
   };

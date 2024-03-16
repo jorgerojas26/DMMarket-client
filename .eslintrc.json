@@ -1,0 +1,10 @@
+{
+    "extends": ["react-app", "eslint:recommended", "plugin:react/recommended"],
+    "rules": {
+        "react/react-in-jsx-scope": "off",
+        "react/exhaustive-deps": "off",
+        "react/prop-types": "off",
+        "react/jsx-key": "off",
+        "react/display-name": "off"
+    }
+}
