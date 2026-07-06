@@ -44,3 +44,10 @@ export const fetchPurchaseDetail = async (providerId, invoiceId) => {
   );
   return response.json();
 };
+
+export const fetchSaleDetail = async (providerId, invoiceId, showNoe) => {
+  const response = await fetch(
+    `${BASE_URL}/${providerId}/sales/${invoiceId}?showNoe=${showNoe}`
+  );
+  return response.json();
+};
