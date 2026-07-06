@@ -20,6 +20,8 @@ const Categories = () => {
     const chartData = useMemo(() => {
         const data_to_use = filteredData?.length ? filteredData : data;
 
+        if (!Array.isArray(data_to_use)) return [];
+
         return data_to_use.reduce(
             (acc, current) => [
                 ...acc,
@@ -51,7 +53,7 @@ const Categories = () => {
                     to,
                     categoryId: selectedGroup?.groupId,
                 });
-                setData(response);
+                setData(Array.isArray(response) ? response : []);
             } catch (error) {
                 console.log("error", error);
             } finally {
