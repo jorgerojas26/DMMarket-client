@@ -1,0 +1,332 @@
+/* Provider Dashboard Modal — same dark theme as ClientDashboardModal */
+.provider-dashboard-modal .modal-content {
+  background: #1a1d21;
+  color: #e9ecef;
+  border: 1px solid #2f3338;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.provider-dashboard-modal .modal-header {
+  background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+  color: #fff;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom: none;
+  padding: 1.25rem 1.5rem;
+}
+
+.provider-dashboard-modal .modal-header .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.provider-dashboard-modal .modal-title {
+  font-weight: 700;
+  letter-spacing: -0.25px;
+}
+
+.provider-dashboard-modal .provider-modal-subtitle {
+  opacity: 0.85;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.provider-dashboard-modal .provider-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.provider-dashboard-modal .modal-body {
+  padding: 1.25rem;
+  background: #1a1d21;
+}
+
+/* Date picker */
+.provider-dashboard-modal .provider-date-picker-card {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: #212529;
+  border: 1px solid #2f3338;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.provider-dashboard-modal .provider-date-picker-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #adb5bd;
+}
+
+.provider-dashboard-modal .date-range-picker-wrapper {
+  justify-content: flex-start;
+}
+
+.provider-dashboard-modal .date-range-dropdown {
+  right: 0;
+  left: auto;
+}
+
+.provider-dashboard-modal .date-range-picker-wrapper .rdrDateRangePickerWrapper {
+  border: none;
+  background: transparent;
+}
+
+/* Stats */
+.provider-dashboard-modal .provider-stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.provider-dashboard-modal .provider-stat-card {
+  position: relative;
+  overflow: hidden;
+  border: none;
+  border-radius: 12px;
+  padding: 0.85rem;
+  color: #fff;
+  background: linear-gradient(135deg, #343a40 0%, #212529 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.provider-dashboard-modal .provider-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.provider-dashboard-modal .provider-stat-card.primary {
+  background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+}
+
+.provider-dashboard-modal .provider-stat-card.success {
+  background: linear-gradient(135deg, #198754 0%, #146c43 100%);
+}
+
+.provider-dashboard-modal .provider-stat-card.info {
+  background: linear-gradient(135deg, #0dcaf0 0%, #0aa2c0 100%);
+}
+
+.provider-dashboard-modal .provider-stat-card.warning {
+  background: linear-gradient(135deg, #ffc107 0%, #cc9a06 100%);
+  color: #212529;
+}
+
+.provider-dashboard-modal .provider-stat-icon {
+  position: absolute;
+  right: -6px;
+  top: -6px;
+  opacity: 0.18;
+  transform: scale(1.15);
+}
+
+.provider-dashboard-modal .provider-stat-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.9;
+  margin-bottom: 0.2rem;
+}
+
+.provider-dashboard-modal .provider-stat-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* Dashboard grid 5:7 */
+.provider-dashboard-modal .provider-dashboard-grid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+@media (max-width: 991px) {
+  .provider-dashboard-modal .provider-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Sales/Purchases table card */
+.provider-dashboard-modal .provider-sales-card {
+  display: flex;
+  flex-direction: column;
+  background: #212529;
+  border: 1px solid #2f3338;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.provider-dashboard-modal .provider-sales-card .provider-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  border-bottom: 1px solid #2f3338;
+  padding: 0.75rem 1rem;
+}
+
+.provider-dashboard-modal .provider-sales-card .provider-card-header h5 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #e9ecef;
+}
+
+.provider-dashboard-modal .provider-sales-card .provider-card-body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 180px;
+  padding: 0;
+}
+
+.provider-dashboard-modal .provider-table-container {
+  flex: 1 1 auto;
+  max-height: none;
+  height: 100%;
+  overflow: auto;
+}
+
+.provider-dashboard-modal .provider-table {
+  width: 100%;
+  height: 100%;
+  margin-bottom: 0;
+  color: #dee2e6;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.provider-dashboard-modal .provider-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #1a1d21;
+  color: #adb5bd;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid #2f3338;
+  text-align: left;
+}
+
+.provider-dashboard-modal .provider-table tbody td {
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid #2a2e33;
+  color: #e9ecef;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.provider-dashboard-modal .provider-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.provider-dashboard-modal .provider-table tbody tr:hover td {
+  background: rgba(13, 110, 253, 0.08);
+}
+
+.provider-dashboard-modal .provider-table td:first-child {
+  padding-left: 0.75rem;
+}
+
+.provider-dashboard-modal .provider-amount {
+  font-weight: 600;
+  color: #20c997;
+}
+
+/* Empty state */
+.provider-dashboard-modal .provider-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+  color: #6c757d;
+}
+
+.provider-dashboard-modal .provider-empty-state svg {
+  margin-bottom: 0.75rem;
+  opacity: 0.6;
+}
+
+/* Loading overlay */
+.provider-dashboard-modal .provider-loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(26, 29, 33, 0.75);
+  backdrop-filter: blur(2px);
+  z-index: 20;
+}
+
+/* Pagination */
+.provider-dashboard-modal .provider-pagination-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-top: 1px solid #2f3338;
+  background: #1a1d21;
+}
+
+.provider-dashboard-modal .provider-pagination-bar button {
+  border-radius: 8px;
+  padding: 0.3rem 0.75rem;
+  font-weight: 500;
+}
+
+.provider-dashboard-modal .provider-pagination-bar span {
+  font-size: 0.8rem;
+  color: #adb5bd;
+  min-width: 100px;
+  text-align: center;
+}
+
+/* Purchase detail total row */
+.provider-dashboard-modal .purchase-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-top: 2px solid #0d6efd;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e9ecef;
+}
+
+.provider-dashboard-modal .purchase-total-amount {
+  color: #20c997;
+  font-size: 1.1rem;
+}
+
+/* Purchase detail modal is md size */
+.purchase-detail-modal .modal-content {
+  background: #1a1d21;
+  color: #e9ecef;
+  border: 1px solid #2f3338;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}

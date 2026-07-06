@@ -12,6 +12,7 @@ import { Link, Route, Switch, useLocation } from "react-router-dom";
 import { fetchCurrencyRates } from "./api/currency_rates";
 import { CurrencyRateContext } from "./context/currency_rate";
 import CategoriesPage from "./pages/categories";
+import ProveedoresPage from "./pages/proveedores";
 
 function App() {
     const location = useLocation();
@@ -64,6 +65,7 @@ function App() {
                                         "productos",
                                         "vendedores",
                                         "categorias",
+                                        "proveedores",
                                     ].map((route, index) => {
                                         return (
                                             <Link
@@ -138,6 +140,7 @@ function App() {
                         <Route path="/clientes" component={ClientesPage} />
                         <Route path="/productos" component={ProductosPage} />
                         <Route path="/vendedores" component={EmployeesPage} />
+                        <Route path="/proveedores" component={ProveedoresPage} />
                     </Switch>
                 </Container>
             </Container>

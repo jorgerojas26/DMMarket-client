@@ -1,10 +1,8 @@
-import { fetchBestClients } from "api/clients";
-import ClientReportCard from "components/Cards/ClientReport";
-import ClientDashboardModal from "components/ClientDashboardModal";
-import ClientPerProductCard from "components/ClientPerProduct/Card";
-import ClientsTable from "components/ClientsTable";
+import { fetchBestProviders } from "api/providers";
 import DateRangePicker from "components/DateRangePicker";
-import MonthlyAverageClientCard from "components/MonthlyAverageClient/Card";
+import ProviderDashboardModal from "components/ProviderDashboardModal";
+import ProviderReportCard from "components/ProviderReportCard";
+import ProvidersTable from "components/ProvidersTable";
 import { ShowNoeContext } from "context/show_noe";
 import debounce from "lodash.debounce";
 import { DateTime } from "luxon";
@@ -12,48 +10,66 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 
-const ClientesPage = () => {
-    const [data, setData] = useState({
-        filtered_best_clients: [],
-        best_clients: [],
-        group_sales_chart: [],
-    });
+const ProveedoresPage = () => {
+    const [data, setData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
     const [dateRange, setDateRange] = useState({
         from: DateTime.now().startOf("month").toISODate(),
         to: DateTime.now().toISODate(),
     });
     const [loading, setLoading] = useState(false);
-    const [selectedClient, setSelectedClient] = useState(null);
-    const [showModal, setShowModal] = useState(false);
     const [activeView, setActiveView] = useState("reports");
+    const [mode, setMode] = useState("ventas");
+    const [selectedProvider, setSelectedProvider] = useState(null);
+    const [showModal, setShowModal] = useState(false);
 
     const { showNoe } = useContext(ShowNoeContext);
 
     const onFilter = debounce((searchTerm) => {
-        const filteredData = data.best_clients.filter((f) =>
-            f.client.toLowerCase().includes(searchTerm.toLowerCase()),
+        if (!searchTerm) {
+            setFilteredData(data);
+            return;
+        }
+        const filtered = data.filter((f) =>
+            f.proveedor.toLowerCase().includes(searchTerm.toLowerCase()),
         );
-        setData({ ...data, filtered_best_clients: filteredData });
+        setFilteredData(filtered);
     }, 500);
 
     const handleDateRangeChange = useCallback(
         async ({ from, to }) => {
             setLoading(true);
-            const response = await fetchBestClients({ from, to }, showNoe);
+            const response = await fetchBestProviders(
+                { from, to },
+                showNoe,
+                mode,
+            );
             setDateRange({ from, to });
-            setData((prev) => ({ ...prev, best_clients: response }));
+            setData(response);
+            setFilteredData(response);
             setLoading(false);
         },
-        [showNoe],
+        [showNoe, mode],
     );
 
     useEffect(() => {
         handleDateRangeChange(dateRange);
         // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [mode]);
+
+    const handleModeChange = useCallback((newMode) => {
+        setMode(newMode);
     }, []);
 
-    const handleRowSelect = useCallback((client) => {
-        setSelectedClient(client);
+    const onFilterCallback = useCallback(
+        (searchTerm) => {
+            onFilter(searchTerm);
+        },
+        [onFilter],
+    );
+
+    const handleProviderSelect = useCallback((provider) => {
+        setSelectedProvider(provider);
         setShowModal(true);
     }, []);
 
@@ -71,14 +87,18 @@ const ClientesPage = () => {
                             <Nav.Link eventKey="reports">Reportes</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link eventKey="clients">Clientes</Nav.Link>
+                            <Nav.Link eventKey="providers">
+                                Proveedores
+                            </Nav.Link>
                         </Nav.Item>
                     </Nav>
                 </div>
                 <div className="clientes-content p-4">
-                    <div className={activeView === "clients" ? "" : "d-none"}>
+                    <div className={activeView === "providers" ? "" : "d-none"}>
                         <div className="clients-content-wrapper">
-                            <ClientsTable onRowSelect={handleRowSelect} />
+                            <ProvidersTable
+                                onRowSelect={handleProviderSelect}
+                            />
                         </div>
                     </div>
                     <section
@@ -90,7 +110,7 @@ const ClientesPage = () => {
                     >
                         <div className="clients-content-wrapper d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3">
                             <h4 className="m-0 text-light">
-                                Reportes de clientes
+                                Reportes de proveedores
                             </h4>
                             <DateRangePicker
                                 initialFrom={DateTime.now()
@@ -102,27 +122,14 @@ const ClientesPage = () => {
                         </div>
                         <div className="clients-content-wrapper">
                             <div className="row justify-content-center g-3">
-                                <div className="col-12 col-lg-6">
-                                    <ClientReportCard
-                                        data={
-                                            data.filtered_best_clients.length >
-                                            0
-                                                ? data.filtered_best_clients
-                                                : data.best_clients
-                                        }
-                                        onFilter={onFilter}
+                                <div className="col-12">
+                                    <ProviderReportCard
+                                        data={filteredData}
+                                        onFilter={onFilterCallback}
                                         loading={loading}
+                                        mode={mode}
+                                        onModeChange={handleModeChange}
                                     />
-                                </div>
-                                <div className="col-12 col-lg-6">
-                                    <ClientPerProductCard
-                                        dateRange={dateRange}
-                                    />
-                                </div>
-                            </div>
-                            <div className="row justify-content-center g-3 mt-0">
-                                <div className="col-12 col-lg-6">
-                                    <MonthlyAverageClientCard />
                                 </div>
                             </div>
                         </div>
@@ -130,14 +137,14 @@ const ClientesPage = () => {
                 </div>
             </div>
             {showModal && (
-                <ClientDashboardModal
+                <ProviderDashboardModal
                     show={showModal}
                     onClose={() => setShowModal(false)}
-                    client={selectedClient}
+                    provider={selectedProvider}
                 />
             )}
         </Container>
     );
 };
 
-export default ClientesPage;
+export default ProveedoresPage;
