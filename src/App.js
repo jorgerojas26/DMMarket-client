@@ -33,7 +33,7 @@ function App() {
 
     return (
         <div className='App bg-dark'>
-            <Container fluid id='main' className='m-0 p-0 vh-100'>
+            <Container fluid id='main' className='m-0 p-0 vh-100 d-flex flex-column'>
                 <Navbar bg='dark' variant='dark' className='border-bottom' expand='lg'>
                     <Container fluid>
                         <Navbar.Brand>SISTEMA DE REPORTES</Navbar.Brand>
@@ -83,7 +83,7 @@ function App() {
                     </Container>
                 </Navbar>
 
-                <Container fluid className='py-3'>
+                <Container fluid className='py-3 d-flex flex-column flex-grow-1'>
                     <Switch>
                         <Route path='/categorias' component={CategoriesPage} />
                         <Route path='/facturas' component={InvoicesPage} />

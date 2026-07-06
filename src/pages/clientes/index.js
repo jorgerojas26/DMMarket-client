@@ -51,7 +51,7 @@ const ClientesPage = () => {
 
   return (
     <Container fluid>
-      <div className='row'>
+      <div className='row flex-grow-1'>
         <div className='col-12 col-md-3 col-lg-2 clients-sidebar mb-3 mb-md-0'>
           <Nav variant='pills' className='flex-row flex-md-column' activeKey={activeView} onSelect={setActiveView}>
             <Nav.Item>
