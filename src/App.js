@@ -83,7 +83,7 @@ function App() {
                     </Container>
                 </Navbar>
 
-                <Container fluid className='py-3 d-flex flex-column flex-grow-1'>
+                <Container fluid className='py-3 d-flex flex-column flex-grow-1 overflow-hidden'>
                     <Switch>
                         <Route path='/categorias' component={CategoriesPage} />
                         <Route path='/facturas' component={InvoicesPage} />

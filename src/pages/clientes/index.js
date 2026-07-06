@@ -50,8 +50,8 @@ const ClientesPage = () => {
   }, []);
 
   return (
-    <Container fluid>
-      <div className='row flex-grow-1'>
+    <Container fluid className='clientes-layout'>
+      <div className='row clientes-row'>
         <div className='col-12 col-md-3 col-lg-2 clients-sidebar mb-3 mb-md-0'>
           <Nav variant='pills' className='flex-row flex-md-column' activeKey={activeView} onSelect={setActiveView}>
             <Nav.Item>
@@ -62,7 +62,7 @@ const ClientesPage = () => {
             </Nav.Item>
           </Nav>
         </div>
-        <div className='col-12 col-md-9 col-lg-10'>
+        <div className='col-12 col-md-9 col-lg-10 clientes-content'>
           <div className={activeView === 'clients' ? '' : 'd-none'}>
             <div className='clients-content-wrapper'>
               <ClientsTable onRowSelect={handleRowSelect} />
