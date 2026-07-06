@@ -25,3 +25,27 @@ export const fetchMonthlyAverage = async (clientId, showNoe) => {
   const report = response.json();
   return report;
 };
+
+export const fetchClientSales = async (clientId, { from, to, page = 1, limit = 20, showNoe }) => {
+  const response = await fetch(
+    `${BASE_URL}/${clientId}/sales?from=${from}&to=${to}&page=${page}&limit=${limit}&showNoe=${showNoe}`
+  );
+  return response.json();
+};
+
+export const fetchClientSummary = async (clientId, { from, to, showNoe }) => {
+  const response = await fetch(
+    `${BASE_URL}/${clientId}/summary?from=${from}&to=${to}&showNoe=${showNoe}`
+  );
+  return response.json();
+};
+
+export const fetchClientsList = async ({ search, page = 1, limit = 20, showNoe }) => {
+  const params = new URLSearchParams();
+  if (search) params.append('search', search);
+  params.append('page', page);
+  params.append('limit', limit);
+  params.append('showNoe', showNoe);
+  const response = await fetch(`${BASE_URL}/list?${params.toString()}`);
+  return response.json();
+};

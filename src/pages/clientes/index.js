@@ -1,8 +1,10 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useCallback } from 'react';
 import Container from 'react-bootstrap/Container';
 import ClientReportCard from 'components/Cards/ClientReport';
 import ClientPerProductCard from 'components/ClientPerProduct/Card';
 import MonthlyAverageClientCard from 'components/MonthlyAverageClient/Card';
+import ClientsTable from 'components/ClientsTable';
+import ClientDashboardModal from 'components/ClientDashboardModal';
 import DatePicker from 'components/DatePicker';
 import { fetchBestClients } from 'api/clients';
 import { DateTime } from 'luxon';
@@ -20,8 +22,10 @@ const ClientesPage = () => {
     to: DateTime.now().toISODate(),
   });
   const [loading, setLoading] = useState(false);
+  const [selectedClient, setSelectedClient] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
-    const {showNoe} = useContext(ShowNoeContext)
+  const { showNoe } = useContext(ShowNoeContext);
 
   const onFilter = debounce((searchTerm) => {
     const filteredData = data.best_clients.filter((f) => f.client.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -38,24 +42,33 @@ const ClientesPage = () => {
     setLoading(false);
   };
 
+  const handleRowSelect = useCallback((client) => {
+    setSelectedClient(client);
+    setShowModal(true);
+  }, []);
+
   return (
     <Container fluid>
       <DatePicker onSubmit={onSubmit} loading={loading} />
-      <div className='d-flex flex-column flex-xl-row justify-content-center gap-3'>
-        <div className='col-12 col-xl-4'>
+      <div className='row'>
+        <div className='col-12 col-xl-8 mb-3 mb-xl-0'>
+          <ClientsTable onRowSelect={handleRowSelect} />
+        </div>
+        <div className='col-12 col-xl-4 d-flex flex-column gap-3'>
           <ClientReportCard
             data={data.filtered_best_clients.length > 0 ? data.filtered_best_clients : data.best_clients}
             onFilter={onFilter}
             loading={loading}
           />
-        </div>
-        <div className='col-12 col-xl-4'>
           <ClientPerProductCard dateRange={dateRange} />
-        </div>
-        <div className='col-12 col-xl-4'>
           <MonthlyAverageClientCard />
         </div>
       </div>
+      <ClientDashboardModal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        client={selectedClient}
+      />
     </Container>
   );
 };
