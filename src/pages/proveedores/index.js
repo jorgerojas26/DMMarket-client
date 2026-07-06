@@ -18,7 +18,7 @@ const ProveedoresPage = () => {
         to: DateTime.now().toISODate(),
     });
     const [loading, setLoading] = useState(false);
-    const [activeView, setActiveView] = useState("reports");
+    const [activeView, setActiveView] = useState("providers");
     const [mode, setMode] = useState("ventas");
     const [selectedProvider, setSelectedProvider] = useState(null);
     const [showModal, setShowModal] = useState(false);
@@ -84,13 +84,13 @@ const ProveedoresPage = () => {
                         onSelect={setActiveView}
                     >
                         <Nav.Item>
-                            <Nav.Link eventKey="reports">Reportes</Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
                             <Nav.Link eventKey="providers">
                                 Proveedores
                             </Nav.Link>
                         </Nav.Item>
+                        {/* <Nav.Item> */}
+                        {/*     <Nav.Link eventKey="reports">Reportes</Nav.Link> */}
+                        {/* </Nav.Item> */}
                     </Nav>
                 </div>
                 <div className="clientes-content p-4">
