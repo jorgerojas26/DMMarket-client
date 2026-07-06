@@ -151,10 +151,9 @@ div .card-header h3 {
   }
 }
 
-.clients-reports-section {
-  border-top: 1px solid #373b3e;
-  padding-top: 1.5rem;
-  margin-top: 1.5rem;
+.clients-sidebar {
+  border-right: 1px solid #373b3e;
+  padding-top: 1rem;
 }
 
 .nav-link:hover,

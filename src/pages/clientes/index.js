@@ -1,5 +1,6 @@
 import { useContext, useState, useCallback } from 'react';
 import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
 import ClientReportCard from 'components/Cards/ClientReport';
 import ClientPerProductCard from 'components/ClientPerProduct/Card';
 import MonthlyAverageClientCard from 'components/MonthlyAverageClient/Card';
@@ -24,6 +25,7 @@ const ClientesPage = () => {
   const [loading, setLoading] = useState(false);
   const [selectedClient, setSelectedClient] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [activeView, setActiveView] = useState('clients');
 
   const { showNoe } = useContext(ShowNoeContext);
 
@@ -49,34 +51,36 @@ const ClientesPage = () => {
 
   return (
     <Container fluid>
-      <div className='row mb-4'>
-        <div className='col-12'>
-          <ClientsTable onRowSelect={handleRowSelect} />
+      <div className='row'>
+        <div className='col-12 col-md-3 col-lg-2 clients-sidebar mb-3 mb-md-0'>
+          <Nav variant='pills' className='flex-row flex-md-column' activeKey={activeView} onSelect={setActiveView}>
+            <Nav.Item>
+              <Nav.Link eventKey='clients'>Clientes</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey='reports'>Reportes</Nav.Link>
+            </Nav.Item>
+          </Nav>
         </div>
-      </div>
-
-      <section className='clients-reports-section'>
-        <div className='d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-3'>
-          <h4 className='m-0 text-light'>Reportes de clientes</h4>
-          <DatePicker onSubmit={onSubmit} loading={loading} />
-        </div>
-        <div className='row g-3'>
-          <div className='col-12 col-lg-4 d-flex'>
+        <div className='col-12 col-md-9 col-lg-10'>
+          <div className={activeView === 'clients' ? '' : 'd-none'}>
+            <ClientsTable onRowSelect={handleRowSelect} />
+          </div>
+          <section className={activeView === 'reports' ? 'd-flex flex-column gap-3' : 'd-none'}>
+            <div className='d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3'>
+              <h4 className='m-0 text-light'>Reportes de clientes</h4>
+              <DatePicker onSubmit={onSubmit} loading={loading} />
+            </div>
             <ClientReportCard
               data={data.filtered_best_clients.length > 0 ? data.filtered_best_clients : data.best_clients}
               onFilter={onFilter}
               loading={loading}
             />
-          </div>
-          <div className='col-12 col-lg-4 d-flex'>
             <ClientPerProductCard dateRange={dateRange} />
-          </div>
-          <div className='col-12 col-lg-4 d-flex'>
             <MonthlyAverageClientCard />
-          </div>
+          </section>
         </div>
-      </section>
-
+      </div>
       <ClientDashboardModal
         show={showModal}
         onClose={() => setShowModal(false)}

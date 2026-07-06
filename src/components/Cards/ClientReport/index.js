@@ -2,7 +2,7 @@ import ClientReportTable from 'components/ClientReportTable';
 
 const ClientReportCard = ({ loading, data = [], onFilter }) => {
   return (
-    <div className='card h-100'>
+    <div className='card'>
       <div className='card-header'>
         <h3>Mejores clientes</h3>
       </div>

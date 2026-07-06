@@ -27,7 +27,7 @@ const MonthlyAverageClient = () => {
   }, [selectedClient, showNoe]);
 
   return (
-    <div className='card h-100'>
+    <div className='card'>
       <div className='card-header'>
         <h3>Promedio mensual</h3>
       </div>
