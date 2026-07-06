@@ -150,7 +150,7 @@ describe('ProvidersTable', () => {
       userEvent.click(screen.getByText('Proveedor A'));
     });
 
-    expect(row.style.background).toBe('lightblue');
+    expect(row).toHaveClass('providers-table__row--selected');
   });
 
   it('renders search input', async () => {

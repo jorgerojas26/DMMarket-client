@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext, useCallback } from 'react';
 import { ShowNoeContext } from 'context/show_noe';
 import { fetchProvidersList } from 'api/providers';
+import './styles.css';
 
 const LIMIT = 20;
 
@@ -55,20 +56,37 @@ const ProvidersTable = ({ onRowSelect }) => {
   };
 
   return (
-    <div className='card'>
-      <div className='card-header'>
+    <section className='providers-table-panel'>
+      <header className='providers-table__header'>
         <h3>Proveedores</h3>
-        <input
-          className='input-filter'
-          placeholder='Buscar por empresa...'
-          type='search'
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-        />
-      </div>
-      <div className='card-body' style={{ position: 'relative', height: 'auto', minHeight: 200 }}>
-        <div className='table-container' style={{ maxHeight: 350, overflow: 'auto' }}>
-          <table>
+        <div className='providers-table__search'>
+          <svg
+            className='providers-table__search-icon'
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 24 24'
+            stroke='currentColor'
+            strokeWidth={2}
+            aria-hidden='true'
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
+            />
+          </svg>
+          <input
+            className='providers-table__input'
+            placeholder='Buscar por empresa...'
+            type='search'
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
+        </div>
+      </header>
+      <div className='providers-table__body'>
+        <div className='providers-table__scroll'>
+          <table className='providers-table'>
             <thead>
               <tr>
                 <th>IdProveedor</th>
@@ -84,11 +102,13 @@ const ProvidersTable = ({ onRowSelect }) => {
                 data.map((provider) => (
                   <tr
                     key={provider.IdProveedor}
+                    className={
+                      selectedId === provider.IdProveedor
+                        ? 'providers-table__row--selected'
+                        : undefined
+                    }
                     onClick={() => handleRowClick(provider)}
-                    style={{
-                      cursor: 'pointer',
-                      background: selectedId === provider.IdProveedor ? 'lightblue' : undefined,
-                    }}
+                    style={{ cursor: 'pointer' }}
                   >
                     <td>{provider.IdProveedor}</td>
                     <td>{provider.Empresa}</td>
@@ -101,7 +121,7 @@ const ProvidersTable = ({ onRowSelect }) => {
               ) : (
                 !loading && (
                   <tr>
-                    <td colSpan={6} style={{ textAlign: 'center', padding: '20px' }}>
+                    <td colSpan={6} className='providers-table__empty'>
                       Sin datos
                     </td>
                   </tr>
@@ -111,17 +131,13 @@ const ProvidersTable = ({ onRowSelect }) => {
           </table>
         </div>
         {loading && (
-          <div
-            className='d-flex justify-content-center align-items-center'
-            style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(255,255,255,0.7)' }}
-          >
-            <span className='spinner-border spinner-border-md' role='status' aria-hidden='true' />
+          <div className='providers-table__loader'>
+            <span className='spinner-border spinner-border-md' role='status' />
           </div>
         )}
         {totalPages > 1 && (
-          <div className='d-flex justify-content-center align-items-center gap-3 p-2 border-top'>
+          <div className='providers-table__footer'>
             <button
-              className='btn btn-sm btn-outline-secondary'
               disabled={page <= 1}
               onClick={() => setPage((p) => p - 1)}
             >
@@ -131,7 +147,6 @@ const ProvidersTable = ({ onRowSelect }) => {
               Página {page} de {totalPages}
             </span>
             <button
-              className='btn btn-sm btn-outline-secondary'
               disabled={page >= totalPages}
               onClick={() => setPage((p) => p + 1)}
             >
@@ -140,7 +155,7 @@ const ProvidersTable = ({ onRowSelect }) => {
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 
