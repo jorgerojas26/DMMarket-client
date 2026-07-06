@@ -38,7 +38,8 @@
 .date-range-dropdown {
   position: absolute;
   top: calc(100% + 8px);
-  left: 0;
+  right: 0;
+  left: auto;
   z-index: 1050;
   background: #212529;
   border: 1px solid #373b3e;

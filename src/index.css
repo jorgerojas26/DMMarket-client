@@ -292,3 +292,28 @@ input:checked + .slider:before {
     border-radius: 50%;
 }
 
+.app-navbar {
+    background-color: #1a1d21 !important;
+    position: relative;
+}
+
+.navbar::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #373b3e;
+    pointer-events: none;
+}
+
+.navbar.has-clients-sidebar::after {
+    background: linear-gradient(to right, #1a1d21 260px, #373b3e 260px);
+}
+
+@media (max-width: 767.98px) {
+    .navbar.has-clients-sidebar::after {
+        background: #1a1d21;
+    }
+}

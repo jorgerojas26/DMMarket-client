@@ -60,8 +60,8 @@ const DateRangePicker = ({
   const [isOpen, setIsOpen] = useState(false);
   const [state, setState] = useState([
     {
-      startDate: new Date(initialFrom),
-      endDate: new Date(initialTo),
+      startDate: DateTime.fromISO(initialFrom).toJSDate(),
+      endDate: DateTime.fromISO(initialTo).toJSDate(),
       key: 'selection',
     },
   ]);
@@ -93,8 +93,8 @@ const DateRangePicker = ({
   };
 
   const { startDate, endDate } = state[0];
-  const fromLabel = DateTime.fromJSDate(startDate).toFormat('dd/MM/yyyy', { locale: 'es' });
-  const toLabel = DateTime.fromJSDate(endDate).toFormat('dd/MM/yyyy', { locale: 'es' });
+  const fromLabel = DateTime.fromJSDate(startDate).toFormat('dd MMM yyyy', { locale: 'es' });
+  const toLabel = DateTime.fromJSDate(endDate).toFormat('dd MMM yyyy', { locale: 'es' });
 
   return (
     <div className='date-range-picker-wrapper' ref={wrapperRef}>

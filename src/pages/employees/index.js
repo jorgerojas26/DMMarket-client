@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import EmployeeSalesTable from 'employees/Table/Sales';
-import EmployeeActions from 'employees/Actions';
+import EmployeeActions from "employees/Actions";
+import EmployeeSalesTable from "employees/Table/Sales";
+import { useState } from "react";
 
 const EmployeesPage = () => {
     const [employeeSales, setEmployeeSales] = useState([]);
@@ -11,8 +11,8 @@ const EmployeesPage = () => {
 
     return (
         <>
-            <div className='row justify-content-center'>
-                <div className='col-sm-12 col-xl-8'>
+            <div className="row justify-content-center p-4">
+                <div className="col-sm-12 col-xl-8">
                     <EmployeeActions onDateSubmit={onSubmit} />
                     <EmployeeSalesTable data={employeeSales} />
                 </div>

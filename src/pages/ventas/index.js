@@ -1,11 +1,12 @@
-import { useContext, useState } from 'react';
-import Container from 'react-bootstrap/Container';
-import SaleReportCard from 'components/Cards/SaleReport';
-import GroupSales from 'components/Cards/GroupSales';
-import DatePicker from 'components/DatePicker';
-import { fetchInvoiceReport } from 'api/invoice';
-import debounce from 'lodash.debounce';
-import { ShowNoeContext } from 'context/show_noe';
+import { fetchInvoiceReport } from "api/invoice";
+import GroupSales from "components/Cards/GroupSales";
+import SaleReportCard from "components/Cards/SaleReport";
+import DateRangePicker from "components/DateRangePicker";
+import { ShowNoeContext } from "context/show_noe";
+import debounce from "lodash.debounce";
+import { DateTime } from "luxon";
+import { useContext, useEffect, useState } from "react";
+import Container from "react-bootstrap/Container";
 
 const VentasPage = () => {
     const [data, setData] = useState({
@@ -14,6 +15,10 @@ const VentasPage = () => {
         group_sales_chart: [],
     });
     const [loading, setLoading] = useState(false);
+    const [dateRange, setDateRange] = useState({
+        from: DateTime.now().startOf("month").toISODate(),
+        to: DateTime.now().toISODate(),
+    });
 
     const { showNoe } = useContext(ShowNoeContext);
 
@@ -24,11 +29,10 @@ const VentasPage = () => {
         setData({ ...data, filtered_invoices_report: filteredData });
     }, 500);
 
-    const onSubmit = async (event, dateRange) => {
-        event.preventDefault();
-
+    const handleDateRangeChange = async ({ from, to }) => {
         setLoading(true);
-        const response = await fetchInvoiceReport({ ...dateRange, showNoe });
+        setDateRange({ from, to });
+        const response = await fetchInvoiceReport({ from, to, showNoe });
         const chartData = response.group_sales_chart_data.reduce(
             (acc, current) => [
                 ...acc,
@@ -41,16 +45,31 @@ const VentasPage = () => {
             ],
             [],
         );
-        setData({ ...data, invoices_report: response.sales_report, group_sales_chart: chartData });
+        setData((prev) => ({
+            ...prev,
+            invoices_report: response.sales_report,
+            group_sales_chart: chartData,
+        }));
         setLoading(false);
     };
 
-    return (
-        <Container fluid>
-            <DatePicker onSubmit={onSubmit} loading={loading} />
+    useEffect(() => {
+        handleDateRangeChange(dateRange);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-            <div className='d-flex flex-column flex-xl-row justify-content-center gap-3'>
-                <div className='col-12 col-xl-6'>
+    return (
+        <Container fluid className="p-4">
+            <div className="d-flex justify-content-center mb-4">
+                <DateRangePicker
+                    initialFrom={DateTime.now().startOf("month").toISODate()}
+                    initialTo={DateTime.now().toISODate()}
+                    onChange={handleDateRangeChange}
+                />
+            </div>
+
+            <div className="d-flex flex-column flex-xl-row justify-content-center gap-3">
+                <div className="col-12 col-xl-6">
                     <SaleReportCard
                         data={
                             data.filtered_invoices_report.length > 0
@@ -61,8 +80,11 @@ const VentasPage = () => {
                         loading={loading}
                     />
                 </div>
-                <div className='col-12 col-xl-6'>
-                    <GroupSales chartData={data.group_sales_chart} loading={loading} />
+                <div className="col-12 col-xl-6">
+                    <GroupSales
+                        chartData={data.group_sales_chart}
+                        loading={loading}
+                    />
                 </div>
             </div>
         </Container>
