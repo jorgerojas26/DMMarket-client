@@ -26,7 +26,7 @@ const ClientPerProductCard = ({ dateRange }) => {
     }
   }, [selectedProduct, dateRange, showNoe]);
   return (
-    <div className='card'>
+    <div className='card h-100'>
       <div className='card-header'>
         <h3>Cliente por producto</h3>
         <div style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>

@@ -49,21 +49,34 @@ const ClientesPage = () => {
 
   return (
     <Container fluid>
-      <DatePicker onSubmit={onSubmit} loading={loading} />
-      <div className='row'>
-        <div className='col-12 col-xl-8 mb-3 mb-xl-0'>
+      <div className='row mb-4'>
+        <div className='col-12'>
           <ClientsTable onRowSelect={handleRowSelect} />
         </div>
-        <div className='col-12 col-xl-4 d-flex flex-column gap-3'>
-          <ClientReportCard
-            data={data.filtered_best_clients.length > 0 ? data.filtered_best_clients : data.best_clients}
-            onFilter={onFilter}
-            loading={loading}
-          />
-          <ClientPerProductCard dateRange={dateRange} />
-          <MonthlyAverageClientCard />
-        </div>
       </div>
+
+      <section className='clients-reports-section'>
+        <div className='d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-3'>
+          <h4 className='m-0 text-light'>Reportes de clientes</h4>
+          <DatePicker onSubmit={onSubmit} loading={loading} />
+        </div>
+        <div className='row g-3'>
+          <div className='col-12 col-lg-4 d-flex'>
+            <ClientReportCard
+              data={data.filtered_best_clients.length > 0 ? data.filtered_best_clients : data.best_clients}
+              onFilter={onFilter}
+              loading={loading}
+            />
+          </div>
+          <div className='col-12 col-lg-4 d-flex'>
+            <ClientPerProductCard dateRange={dateRange} />
+          </div>
+          <div className='col-12 col-lg-4 d-flex'>
+            <MonthlyAverageClientCard />
+          </div>
+        </div>
+      </section>
+
       <ClientDashboardModal
         show={showModal}
         onClose={() => setShowModal(false)}
