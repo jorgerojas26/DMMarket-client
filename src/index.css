@@ -159,8 +159,13 @@ div .card-header h3 {
 }
 
 .clients-content-wrapper {
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
+}
+
+.clients-content-wrapper .card {
+  width: 100%;
 }
 
 .nav-link:hover,
