@@ -42,7 +42,8 @@ function App() {
                     variant="dark"
                     className={
                         "app-navbar" +
-                        (location.pathname.includes("/clientes")
+                        (location.pathname.includes("/clientes") ||
+                        location.pathname.includes("/proveedores")
                             ? " has-clients-sidebar"
                             : "")
                     }
