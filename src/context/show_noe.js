@@ -7,7 +7,7 @@ export const ShowNoeContext = createContext({
 });
 
 export const ShowNoesProvider = ({ children }) => {
-  const [showNoe, setShowNoe] = useState(localStorage.getItem('showNoe') ?? false);
+  const [showNoe, setShowNoe] = useState(localStorage.getItem('showNoe') === 'true');
 
   useEffect(() => {
     localStorage.setItem('showNoe', showNoe.toString() ?? false);
