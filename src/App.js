@@ -34,7 +34,7 @@ function App() {
     return (
         <div className='App bg-dark'>
             <Container fluid id='main' className='m-0 p-0 vh-100 d-flex flex-column'>
-                <Navbar bg='dark' variant='dark' className='border-bottom' expand='lg'>
+                <Navbar bg='dark' variant='dark' className='border-bottom' expand='xl'>
                     <Container fluid>
                         <Navbar.Brand>SISTEMA DE REPORTES</Navbar.Brand>
 
