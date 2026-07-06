@@ -158,6 +158,11 @@ div .card-header h3 {
   height: 100%;
 }
 
+.clients-content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .nav-link:hover,
 .nav-link.active {
   background: lightgray;

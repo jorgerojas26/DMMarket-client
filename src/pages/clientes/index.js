@@ -64,20 +64,34 @@ const ClientesPage = () => {
         </div>
         <div className='col-12 col-md-9 col-lg-10'>
           <div className={activeView === 'clients' ? '' : 'd-none'}>
-            <ClientsTable onRowSelect={handleRowSelect} />
+            <div className='clients-content-wrapper'>
+              <ClientsTable onRowSelect={handleRowSelect} />
+            </div>
           </div>
           <section className={activeView === 'reports' ? 'd-flex flex-column gap-3' : 'd-none'}>
-            <div className='d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3'>
+            <div className='clients-content-wrapper d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3'>
               <h4 className='m-0 text-light'>Reportes de clientes</h4>
               <DatePicker onSubmit={onSubmit} loading={loading} />
             </div>
-            <ClientReportCard
-              data={data.filtered_best_clients.length > 0 ? data.filtered_best_clients : data.best_clients}
-              onFilter={onFilter}
-              loading={loading}
-            />
-            <ClientPerProductCard dateRange={dateRange} />
-            <MonthlyAverageClientCard />
+            <div className='clients-content-wrapper'>
+              <div className='row justify-content-center g-3'>
+                <div className='col-12 col-lg-6'>
+                  <ClientReportCard
+                    data={data.filtered_best_clients.length > 0 ? data.filtered_best_clients : data.best_clients}
+                    onFilter={onFilter}
+                    loading={loading}
+                  />
+                </div>
+                <div className='col-12 col-lg-6'>
+                  <ClientPerProductCard dateRange={dateRange} />
+                </div>
+              </div>
+              <div className='row justify-content-center g-3 mt-0'>
+                <div className='col-12 col-lg-6'>
+                  <MonthlyAverageClientCard />
+                </div>
+              </div>
+            </div>
           </section>
         </div>
       </div>
